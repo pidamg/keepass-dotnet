@@ -6,9 +6,9 @@ namespace Pidamg.KeePass.Kdbx.Tests;
 public class FindTests
 {
 
-    private static Database MakeDb()
+    private static KdbxDatabase MakeDb()
     {
-        var db = Database.Create("pass");
+        var db = KdbxDatabase.Create("pass");
         var sub = new Group { Name = "Work" };
         var deep = new Group { Name = "Dev" };
 

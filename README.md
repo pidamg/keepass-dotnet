@@ -15,10 +15,10 @@ dotnet add package Pidamg.KeePass.Kdbx
 using Pidamg.KeePass.Kdbx;
 
 // Ouvrir une base existante
-var db = Database.Open("vault.kdbx", "password");
+var db = KdbxDatabase.Open("vault.kdbx", "password");
 
 // Créer une nouvelle base
-var db = Database.Create("password");
+var db = KdbxDatabase.Create("password");
 db.Metadata.Name = "Mon coffre-fort";
 
 // Lire les entrées
@@ -48,34 +48,34 @@ KeyFile.Generate("vault.keyx");                        // KeePass XML v1 (défau
 KeyFile.Generate("vault.key", KeyFileFormat.Raw);      // 32 octets aléatoires bruts
 
 // Ouvrir une base protégée par mot de passe + fichier de clé
-var db = Database.Open("vault.kdbx", "password", "vault.keyx");
+var db = KdbxDatabase.Open("vault.kdbx", "password", "vault.keyx");
 ```
 
 ## API publique
 
-### `Database`
+### `KdbxDatabase`
 
 Point d'entrée principal de la bibliothèque. Implémente `IDisposable` — appeler `Dispose()` efface les clés cryptographiques en mémoire (`CompositeKey.Zeroize()`) et libère toutes les données.
 
 ```csharp
 // Constructeurs
-new Database()
-new Database(CompositeKey key)
-new Database(string path)
-new Database(string path, CompositeKey key)
-new Database(string path, string password)
-new Database(string path, string password, string keyFile)
+new KdbxDatabase()
+new KdbxDatabase(CompositeKey key)
+new KdbxDatabase(string path)
+new KdbxDatabase(string path, CompositeKey key)
+new KdbxDatabase(string path, string password)
+new KdbxDatabase(string path, string password, string keyFile)
 
 // Factories
-Database.Create(string password, Settings? settings = null)
-Database.Create(string password, string keyFile, Settings? settings = null)
-Database.Open(string path, string password, string? keyFile = null)
+KdbxDatabase.Create(string password, KdbxSettings? settings = null)
+KdbxDatabase.Create(string password, string keyFile, KdbxSettings? settings = null)
+KdbxDatabase.Open(string path, string password, string? keyFile = null)
 
 // Propriétés
 Metadata   Metadata   { get; }   // lève InvalidOperationException si la base n'est pas ouverte
 Group      RootGroup  { get; }   // lève InvalidOperationException si la base n'est pas ouverte
-Version    Version    { get; }   // 0.0 avant ouverture, ex. 4.1 / 3.1 après
-Settings   Settings   { get; set; }
+KdbxVersion    Version    { get; }   // 0.0 avant ouverture, ex. 4.1 / 3.1 après
+KdbxSettings   Settings   { get; set; }
 FileInfo?  FileInfo   { get; }
 bool       HasChanges { get; }
 
@@ -105,7 +105,7 @@ IEnumerable<Group> FindAllGroups(Func<Group, bool> predicate)
 
 ```csharp
 // Propriétés
-Database? Database    { get; }
+KdbxDatabase? Database    { get; }
 Group?    ParentGroup { get; }
 Guid      Uuid           { get; set; }
 int       IconId         { get; set; }   // index d'icône intégrée
@@ -136,7 +136,7 @@ Entry Clone()             // copie profonde avec nouvel UUID et historique vide
 
 ```csharp
 // Propriétés
-Database? Database        { get; }
+KdbxDatabase? Database        { get; }
 Group?    ParentGroup     { get; }
 Guid      Uuid            { get; set; }
 string    Name            { get; set; }
@@ -197,9 +197,9 @@ group.CustomIconUuid = icon.Uuid;
 var icon = db.Metadata.CustomIcons.FirstOrDefault(i => i.Uuid == entry.CustomIconUuid);
 ```
 
-### `Settings`
+### `KdbxSettings`
 
-Configuration du format de la base. À passer à `Database.Create()` pour personnaliser.
+Configuration du format de la base. À passer à `KdbxDatabase.Create()` pour personnaliser.
 
 ```csharp
 KdbxFormat               Format               // KdbxFormat.Kdbx4 (défaut) ou KdbxFormat.Kdbx3
@@ -212,17 +212,17 @@ IKdf                     Kdf                  // Argon2id (défaut) ou AesKdf
 Exemple — créer une base KDBX 3.x avec AES-KDF :
 
 ```csharp
-var settings = new Settings {
+var settings = new KdbxSettings {
     Format = KdbxFormat.Kdbx3,
     Cipher = CipherAlgorithm.ChaCha20,
     Kdf    = new AesKdf(RandomNumberGenerator.GetBytes(32), 100_000UL),
 };
-var db = Database.Create("password", settings);
+var db = KdbxDatabase.Create("password", settings);
 ```
 
-### `Version`
+### `KdbxVersion`
 
-Version du format KDBX. Initialisée à `0.0` (`IsZero == true`) avant ouverture, puis renseignée depuis l'en-tête lors de la lecture, ou déduite de `Settings.Format` lors d'un `Create()`.
+Version du format KDBX. Initialisée à `0.0` (`IsZero == true`) avant ouverture, puis renseignée depuis l'en-tête lors de la lecture, ou déduite de `KdbxSettings.Format` lors d'un `Create()`.
 
 ```csharp
 ushort Major   // 3 ou 4
@@ -236,9 +236,9 @@ bool   IsZero  // true si non initialisée
 Exemples :
 
 ```csharp
-var db = Database.Create("pass");    // → db.Version == new Version(4, 1)
-var db = Database.Open("v.kdbx", "pass");
-if (db.Version >= new Version(4, 0))
+var db = KdbxDatabase.Create("pass");    // → db.Version == new KdbxVersion(4, 1)
+var db = KdbxDatabase.Open("v.kdbx", "pass");
+if (db.Version >= new KdbxVersion(4, 0))
     Console.WriteLine("KDBX 4.x");
 ```
 
@@ -294,7 +294,7 @@ Dépendance unique : **BouncyCastle.Cryptography** (Argon2, ChaCha20, Twofish).
 ## Architecture interne
 
 ```
-Database
+KdbxDatabase
 ├── KdbxReader(db).ReadFrom(stream)
 │   ├── KdbxHeader.Read()          — en-tête binaire + paramètres KDF
 │   ├── DerivedKey.Derive()        — Argon2 / AES-KDF
@@ -345,7 +345,7 @@ dotnet pack src/Pidamg.KeePass.Kdbx/Pidamg.KeePass.Kdbx.csproj
 | Binaires V3 | Binaire unique via Meta pool |
 | CRUD entrée | `Delete()` (avec/sans corbeille), `MoveTo()`, `Update()` + historique, `Clone()` |
 | CRUD groupe | `AddEntry/Group`, `RemoveEntry/Group`, `Delete()`, `MoveTo()`, `Clone()`, `IsAncestorOf()` |
-| Database | `HasChanges`, `IsRecycleBinEnabled()`, `GetRecycleBin()`, `Version` |
+| KdbxDatabase | `HasChanges`, `IsRecycleBinEnabled()`, `GetRecycleBin()`, `Version` |
 | Recherche | `FindEntry` / `FindAllEntries` / `FindGroup` / `FindAllGroups` — racine, imbriqué, prédicat, sous-arbre |
 | Times V4 | Tous les champs de date, `Expires`, `UsageCount`, `DateTimeKind.Utc`, times de groupe |
 | Times V3 | Tous les champs de date, `Expires`, `DateTimeKind.Utc`, times de groupe |
@@ -366,5 +366,5 @@ dotnet pack src/Pidamg.KeePass.Kdbx/Pidamg.KeePass.Kdbx.csproj
 
 - [x] Icônes personnalisées (`<Meta><CustomIcons>`)
 - [ ] Champs `<Meta>` supplémentaires (`Generator`, `MasterKeyChanged`, `MemoryProtection` complet…)
-- [x] `FindEntry()` / `FindGroup()` — recherche récursive sur `Group` et `Database`
+- [x] `FindEntry()` / `FindGroup()` — recherche récursive sur `Group` et `KdbxDatabase`
 - [ ] Synchronisation à la sauvegarde — détecter si le fichier a été modifié entre l'ouverture et la sauvegarde, fusionner les modifications au lieu d'écraser

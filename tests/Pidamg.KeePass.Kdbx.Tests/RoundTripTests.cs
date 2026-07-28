@@ -9,11 +9,11 @@ namespace Pidamg.KeePass.Kdbx.Tests;
 public class RoundTripTests
 {
 
-    private static Database MakeDb(string password, KdbxFormat format = KdbxFormat.Kdbx4)
+    private static KdbxDatabase MakeDb(string password, KdbxFormat format = KdbxFormat.Kdbx4)
     {
-        var settings = new Settings { Format = format };
+        var settings = new KdbxSettings { Format = format };
         if (format == KdbxFormat.Kdbx3) settings.Kdf = new AesKdf(RandomNumberGenerator.GetBytes(32), 100_000UL);
-        return Database.Create(password, settings);
+        return KdbxDatabase.Create(password, settings);
     }
 
     // ── KDBX 4.x ─────────────────────────────────────────────────────────────
@@ -28,7 +28,7 @@ public class RoundTripTests
         new KdbxWriter(writeDb).WriteTo(ms);
 
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword("hunter2"));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword("hunter2"));
         new KdbxReader(readDb).ReadFrom(ms);
 
         Assert.Equal("TestV4", readDb.Metadata.Name);
@@ -46,7 +46,7 @@ public class RoundTripTests
         new KdbxWriter(writeDb).WriteTo(ms);
 
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword("correcthorsebatterystaple"));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword("correcthorsebatterystaple"));
         new KdbxReader(readDb).ReadFrom(ms);
 
         Assert.Equal("TestV3", readDb.Metadata.Name);
@@ -66,7 +66,7 @@ public class RoundTripTests
         new KdbxWriter(writeDb).WriteTo(ms);
 
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword("pass"));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword("pass"));
         new KdbxReader(readDb).ReadFrom(ms);
 
         var readEntry = readDb.RootGroup.Entries.First(e => e.Uuid == entry.Uuid);
@@ -84,7 +84,7 @@ public class RoundTripTests
         new KdbxWriter(writeDb).WriteTo(ms);
 
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword(""));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword(""));
         new KdbxReader(readDb).ReadFrom(ms);
 
         Assert.Equal("Root", readDb.RootGroup.Name);

@@ -12,7 +12,7 @@ namespace Pidamg.KeePass.Kdbx;
 public class KdbxXmlWriter
 {
 
-    private readonly Database _db;
+    private readonly KdbxDatabase _db;
     private readonly ProtectedStream _ps;
     private readonly bool _isV4;
     private readonly List<(bool IsProtected, byte[] Data)> _binaryPool;
@@ -21,7 +21,7 @@ public class KdbxXmlWriter
     // before calling WriteTo(). Pool is built eagerly in the constructor.
     public IReadOnlyList<(bool IsProtected, byte[] Data)> BinaryPool => _binaryPool;
 
-    public KdbxXmlWriter(Database db, ProtectedStream ps, bool isV4)
+    public KdbxXmlWriter(KdbxDatabase db, ProtectedStream ps, bool isV4)
     {
         _db = db;
         _ps = ps;

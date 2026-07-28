@@ -15,17 +15,17 @@ public class TimesTests
     private static Entry RoundTripEntry(Entry entry, KdbxFormat format = KdbxFormat.Kdbx4)
     {
         var settings = format == KdbxFormat.Kdbx4
-            ? new Settings { Format = KdbxFormat.Kdbx4 }
-            : new Settings { Format = KdbxFormat.Kdbx3, Kdf = new AesKdf(RandomNumberGenerator.GetBytes(32), 100_000UL) };
+            ? new KdbxSettings { Format = KdbxFormat.Kdbx4 }
+            : new KdbxSettings { Format = KdbxFormat.Kdbx3, Kdf = new AesKdf(RandomNumberGenerator.GetBytes(32), 100_000UL) };
 
-        var writeDb = Database.Create("pass", settings);
+        var writeDb = KdbxDatabase.Create("pass", settings);
         writeDb.RootGroup.AddEntry(entry);
 
         using var ms = new MemoryStream();
         new KdbxWriter(writeDb).WriteTo(ms);
 
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword("pass"));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword("pass"));
         new KdbxReader(readDb).ReadFrom(ms);
         return readDb.RootGroup.Entries[0];
     }
@@ -33,17 +33,17 @@ public class TimesTests
     private static Group RoundTripGroup(Group group, KdbxFormat format = KdbxFormat.Kdbx4)
     {
         var settings = format == KdbxFormat.Kdbx4
-            ? new Settings { Format = KdbxFormat.Kdbx4 }
-            : new Settings { Format = KdbxFormat.Kdbx3, Kdf = new AesKdf(RandomNumberGenerator.GetBytes(32), 100_000UL) };
+            ? new KdbxSettings { Format = KdbxFormat.Kdbx4 }
+            : new KdbxSettings { Format = KdbxFormat.Kdbx3, Kdf = new AesKdf(RandomNumberGenerator.GetBytes(32), 100_000UL) };
 
-        var writeDb = Database.Create("pass", settings);
+        var writeDb = KdbxDatabase.Create("pass", settings);
         writeDb.RootGroup.AddGroup(group);
 
         using var ms = new MemoryStream();
         new KdbxWriter(writeDb).WriteTo(ms);
 
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword("pass"));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword("pass"));
         new KdbxReader(readDb).ReadFrom(ms);
         return readDb.RootGroup.Groups[0];
     }

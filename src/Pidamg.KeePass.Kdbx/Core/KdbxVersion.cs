@@ -3,25 +3,25 @@ using System.IO;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public class Version : IEquatable<Version>, IComparable<Version>
+public class KdbxVersion : IEquatable<KdbxVersion>, IComparable<KdbxVersion>
 {
 
     public readonly ushort Major;
     public readonly ushort Minor;
     public bool IsZero => Major == 0 && Minor == 0;
 
-    public Version()
+    public KdbxVersion()
     {
         Major = Minor = 0;
     }
 
-    public Version(ushort major, ushort minor)
+    public KdbxVersion(ushort major, ushort minor)
     {
         Major = major;
         Minor = minor;
     }
 
-    public int CompareTo(Version? other)
+    public int CompareTo(KdbxVersion? other)
     {
         if (other is null) return 1;
         // compare major
@@ -34,7 +34,7 @@ public class Version : IEquatable<Version>, IComparable<Version>
         return 0;
     }
 
-    public bool Equals(Version? other)
+    public bool Equals(KdbxVersion? other)
     {
         if (other is null) return false;
         return Major == other.Major && Minor == other.Minor;
@@ -42,7 +42,7 @@ public class Version : IEquatable<Version>, IComparable<Version>
 
     public override bool Equals(object? other)
     {
-        return other is Version v && Equals(v);
+        return other is KdbxVersion v && Equals(v);
     }
 
     public override int GetHashCode()
@@ -56,14 +56,14 @@ public class Version : IEquatable<Version>, IComparable<Version>
     }
 
     // In KDBX the version field is [Minor LE16][Major LE16]
-    public static Version Read(BinaryReader reader)
+    public static KdbxVersion Read(BinaryReader reader)
     {
         ushort minor = reader.ReadUInt16();
         ushort major = reader.ReadUInt16();
-        return new Version(major, minor);
+        return new KdbxVersion(major, minor);
     }
 
-    public static Version Read(Stream stream)
+    public static KdbxVersion Read(Stream stream)
     {
         using var reader = new BinaryReader(stream, System.Text.Encoding.UTF8, leaveOpen: true);
         return Read(reader);
@@ -81,30 +81,30 @@ public class Version : IEquatable<Version>, IComparable<Version>
         Write(writer);
     }
 
-    public static bool operator ==(Version? v1, Version? v2)
+    public static bool operator ==(KdbxVersion? v1, KdbxVersion? v2)
     {
         if (v1 is null) return v2 is null;
         return v1.Equals(v2);
     }
 
-    public static bool operator !=(Version? v1, Version? v2) => !(v1 == v2);
+    public static bool operator !=(KdbxVersion? v1, KdbxVersion? v2) => !(v1 == v2);
 
-    public static bool operator >(Version v1, Version v2)
+    public static bool operator >(KdbxVersion v1, KdbxVersion v2)
     {
         return v1.CompareTo(v2) > 0;
     }
 
-    public static bool operator >=(Version v1, Version v2)
+    public static bool operator >=(KdbxVersion v1, KdbxVersion v2)
     {
         return v1.CompareTo(v2) >= 0;
     }
 
-    public static bool operator <(Version v1, Version v2)
+    public static bool operator <(KdbxVersion v1, KdbxVersion v2)
     {
         return v1.CompareTo(v2) < 0;
     }
 
-    public static bool operator <=(Version v1, Version v2)
+    public static bool operator <=(KdbxVersion v1, KdbxVersion v2)
     {
         return v1.CompareTo(v2) <= 0;
     }

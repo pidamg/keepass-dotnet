@@ -30,7 +30,7 @@ public class KdbxHeader : IHeader
     }
 
     public Signature Signature { get; private set; } = new();
-    public Version Version { get; private set; } = new();
+    public KdbxVersion Version { get; private set; } = new();
     public bool IsVersion4 => Version.Major == 4;
 
     public Guid CipherId { get; private set; }
@@ -114,7 +114,7 @@ public class KdbxHeader : IHeader
         if (h.Signature != ValidSignature)
             throw new FormatException("Invalid KDBX file signatures.");
 
-        h.Version = Version.Read(reader);
+        h.Version = KdbxVersion.Read(reader);
         if (h.Version.Major != 3 && h.Version.Major != 4)
             throw new NotSupportedException($"Unsupported KDBX version: {h.Version}");
 
@@ -201,8 +201,8 @@ public class KdbxHeader : IHeader
     {
         bool v4 = IsVersion4;
 
-        this.Signature.Write(writer);
-        this.Version.Write(writer);
+        Signature.Write(writer);
+        Version.Write(writer);
 
         WriteField(writer, FieldId.CipherId, GuidRfc4122.ToBytes(CipherId), v4);
         WriteField(writer, FieldId.CompressionFlags, GetUInt32LE(IsCompressed ? 1u : 0u), v4);

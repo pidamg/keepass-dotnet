@@ -8,19 +8,19 @@ namespace Pidamg.KeePass.Kdbx.Tests;
 public class AutoTypeTests
 {
 
-    private static Database RoundTrip(Database writeDb)
+    private static KdbxDatabase RoundTrip(KdbxDatabase writeDb)
     {
         using var ms = new MemoryStream();
         new KdbxWriter(writeDb).WriteTo(ms);
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword("pass"));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword("pass"));
         new KdbxReader(readDb).ReadFrom(ms);
         return readDb;
     }
 
-    private static (Database db, Entry entry) MakeDbWithEntry()
+    private static (KdbxDatabase db, Entry entry) MakeDbWithEntry()
     {
-        var db = Database.Create("pass");
+        var db = KdbxDatabase.Create("pass");
         var entry = new Entry();
         db.RootGroup.AddEntry(entry);
         return (db, entry);

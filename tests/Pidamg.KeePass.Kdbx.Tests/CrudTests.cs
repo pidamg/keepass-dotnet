@@ -7,7 +7,7 @@ namespace Pidamg.KeePass.Kdbx.Tests;
 public class CrudTests
 {
 
-    private static Database MakeDb() => Database.Create("pass");
+    private static KdbxDatabase MakeDb() => KdbxDatabase.Create("pass");
     private static Entry NewEntry(string title = "E") => new() { Title = title };
     private static Group NewGroup(string name = "G") => new() { Name = name };
 
@@ -359,7 +359,7 @@ public class CrudTests
         Assert.False(child.IsAncestorOf(sibling));
     }
 
-    // ── Database ──────────────────────────────────────────────────────────────
+    // ── KdbxDatabase ──────────────────────────────────────────────────────────────
 
     [Fact]
     public void Database_HasChanges_FalseAfterCreate_TrueAfterCrud()

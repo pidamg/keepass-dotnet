@@ -11,9 +11,9 @@ namespace Pidamg.KeePass.Kdbx;
 public class KdbxReader
 {
 
-    private readonly Database _db;
+    private readonly KdbxDatabase _db;
 
-    public KdbxReader(Database db)
+    public KdbxReader(KdbxDatabase db)
     {
         _db = db;
     }
@@ -53,7 +53,7 @@ public class KdbxReader
         if (header.IsCompressed) plaintext = Decompress(plaintext);
 
         var ps = new ProtectedStream(header.InnerRandomStreamId, header.ProtectedStreamKey!);
-        _db.Settings = Settings.FromHeader(header, header.InnerRandomStreamId);
+        _db.Settings = KdbxSettings.FromHeader(header, header.InnerRandomStreamId);
 
         // V3: binary pool is parsed from <Meta><Binaries> inside the XML layer
         using var xmlStream = new MemoryStream(plaintext);
@@ -105,7 +105,7 @@ public class KdbxReader
         var (algo, innerKey, binaries) = ReadInnerHeader(innerReader);
 
         var ps = new ProtectedStream(algo, innerKey);
-        _db.Settings = Settings.FromHeader(header, algo);
+        _db.Settings = KdbxSettings.FromHeader(header, algo);
 
         // plainStream is now positioned at the XML bytes
         new KdbxXmlReader(_db, ps, isV4: true, binaries).ReadFrom(plainStream);

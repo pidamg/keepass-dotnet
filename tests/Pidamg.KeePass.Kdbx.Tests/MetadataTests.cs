@@ -7,17 +7,17 @@ namespace Pidamg.KeePass.Kdbx.Tests;
 public class MetadataTests
 {
 
-    private static Database RoundTrip(Database writeDb)
+    private static KdbxDatabase RoundTrip(KdbxDatabase writeDb)
     {
         using var ms = new MemoryStream();
         new KdbxWriter(writeDb).WriteTo(ms);
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword("pass"));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword("pass"));
         new KdbxReader(readDb).ReadFrom(ms);
         return readDb;
     }
 
-    private static Database MakeDb() => Database.Create("pass");
+    private static KdbxDatabase MakeDb() => KdbxDatabase.Create("pass");
 
     // ── Description ───────────────────────────────────────────────────────────
 

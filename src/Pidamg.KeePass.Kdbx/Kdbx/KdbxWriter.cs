@@ -13,9 +13,9 @@ public class KdbxWriter
 
     private const int BlockSize = 1024 * 1024; // 1 MiB
 
-    private readonly Database _db;
+    private readonly KdbxDatabase _db;
 
-    public KdbxWriter(Database db)
+    public KdbxWriter(KdbxDatabase db)
     {
         _db = db;
     }

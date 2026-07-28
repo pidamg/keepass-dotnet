@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public class Database : IDisposable
+public class KdbxDatabase : IDisposable
 {
 
     public FileInfo? FileInfo { get; private set; }
@@ -16,8 +16,8 @@ public class Database : IDisposable
     public Group RootGroup => _data?.RootGroup ?? throw new InvalidOperationException("Database is not open.");
 
     private DatabaseData? _data;
-    public Settings Settings { get; set; } = new();
-    public Version Version { get; internal set; } = new();
+    public KdbxSettings Settings { get; set; } = new();
+    public KdbxVersion Version { get; internal set; } = new();
     public bool HasChanges { get; private set; }
 
     private CompositeKey _key = new();
@@ -28,31 +28,31 @@ public class Database : IDisposable
 
     // ── Constructors ──────────────────────────────────────────────────────────
 
-    public Database() { }
+    public KdbxDatabase() { }
 
-    public Database(CompositeKey key)
+    public KdbxDatabase(CompositeKey key)
     {
         _key = key;
     }
 
-    public Database(string path)
+    public KdbxDatabase(string path)
     {
         FileInfo = new(path);
     }
 
-    public Database(string path, CompositeKey key)
+    public KdbxDatabase(string path, CompositeKey key)
     {
         FileInfo = new(path);
         _key = key;
     }
 
-    public Database(string path, string password)
+    public KdbxDatabase(string path, string password)
     {
         FileInfo = new(path);
         _key = new(password);
     }
 
-    public Database(string path, string password, string keyFile)
+    public KdbxDatabase(string path, string password, string keyFile)
     {
         FileInfo = new(path);
         _key = new(password, keyFile);
@@ -60,21 +60,21 @@ public class Database : IDisposable
 
     // ── Factory ───────────────────────────────────────────────────────────────
 
-    public static Database Create(string password, Settings? settings = null)
+    public static KdbxDatabase Create(string password, KdbxSettings? settings = null)
     {
-        var db = new Database(new CompositeKey(password));
-        db.Settings = settings ?? new Settings();
-        db.Version = db.Settings.Format == KdbxFormat.Kdbx4 ? new Version(4, 1) : new Version(3, 1);
+        var db = new KdbxDatabase(new CompositeKey(password));
+        db.Settings = settings ?? new KdbxSettings();
+        db.Version = db.Settings.Format == KdbxFormat.Kdbx4 ? new KdbxVersion(4, 1) : new KdbxVersion(3, 1);
         db._data = new DatabaseData(new Metadata(), new Group { Name = "Root" });
         db.RootGroup.SetDatabase(db);
         return db;
     }
 
-    public static Database Create(string password, string keyFile, Settings? settings = null)
+    public static KdbxDatabase Create(string password, string keyFile, KdbxSettings? settings = null)
     {
-        var db = new Database(new CompositeKey(password, keyFile));
-        db.Settings = settings ?? new Settings();
-        db.Version = db.Settings.Format == KdbxFormat.Kdbx4 ? new Version(4, 1) : new Version(3, 1);
+        var db = new KdbxDatabase(new CompositeKey(password, keyFile));
+        db.Settings = settings ?? new KdbxSettings();
+        db.Version = db.Settings.Format == KdbxFormat.Kdbx4 ? new KdbxVersion(4, 1) : new KdbxVersion(3, 1);
         db._data = new DatabaseData(new Metadata(), new Group { Name = "Root" });
         db.RootGroup.SetDatabase(db);
         return db;
@@ -82,11 +82,11 @@ public class Database : IDisposable
 
     // ── Read / Write ──────────────────────────────────────────────────────────
 
-    public static Database Open(string path, string password, string? keyFile = null)
+    public static KdbxDatabase Open(string path, string password, string? keyFile = null)
     {
         var db = keyFile != null
-               ? new Database(path, password, keyFile)
-               : new Database(path, password);
+               ? new KdbxDatabase(path, password, keyFile)
+               : new KdbxDatabase(path, password);
         db.Open();
         return db;
     }

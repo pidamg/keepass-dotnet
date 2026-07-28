@@ -12,7 +12,7 @@ namespace Pidamg.KeePass.Kdbx;
 public class KdbxXmlReader
 {
 
-    private readonly Database _db;
+    private readonly KdbxDatabase _db;
     private readonly ProtectedStream _ps;
     private readonly bool _isV4;
     private readonly IReadOnlyList<(bool IsProtected, byte[] Data)> _binaryPool; // V4: from inner header
@@ -20,7 +20,7 @@ public class KdbxXmlReader
     // _pool is set in ReadFrom: either _binaryPool (V4) or parsed from <Meta><Binaries> (V3)
     private List<(bool IsProtected, byte[] Data)> _pool = [];
 
-    public KdbxXmlReader(Database db, ProtectedStream ps, bool isV4,
+    public KdbxXmlReader(KdbxDatabase db, ProtectedStream ps, bool isV4,
                          IReadOnlyList<(bool IsProtected, byte[] Data)>? binaryPool = null)
     {
         _db = db;

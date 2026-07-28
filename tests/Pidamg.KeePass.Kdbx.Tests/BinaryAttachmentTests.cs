@@ -16,7 +16,7 @@ public class BinaryAttachmentTests
         return data;
     }
 
-    private static Settings MakeV3Settings() => new()
+    private static KdbxSettings MakeV3Settings() => new()
     {
         Format = KdbxFormat.Kdbx3,
         Kdf = new AesKdf(RandomNumberGenerator.GetBytes(32), 100_000UL),
@@ -29,7 +29,7 @@ public class BinaryAttachmentTests
     {
         byte[] payload = MakeData(42, 256);
 
-        var writeDb = Database.Create("pass");
+        var writeDb = KdbxDatabase.Create("pass");
         var entry = new Entry { Title = "WithAttachment" };
         entry.Binaries.Add(new EntryBinary { Name = "file.bin", Data = payload });
         writeDb.RootGroup.AddEntry(entry);
@@ -38,7 +38,7 @@ public class BinaryAttachmentTests
         new KdbxWriter(writeDb).WriteTo(ms);
 
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword("pass"));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword("pass"));
         new KdbxReader(readDb).ReadFrom(ms);
 
         var readEntry = readDb.RootGroup.Entries.First(e => e.Uuid == entry.Uuid);
@@ -54,7 +54,7 @@ public class BinaryAttachmentTests
         byte[] d2 = MakeData(2, 128);
         byte[] d3 = MakeData(3, 32);
 
-        var writeDb = Database.Create("pass");
+        var writeDb = KdbxDatabase.Create("pass");
         var entry = new Entry();
         entry.Binaries.Add(new EntryBinary { Name = "one.txt", Data = d1 });
         entry.Binaries.Add(new EntryBinary { Name = "two.bin", Data = d2 });
@@ -65,7 +65,7 @@ public class BinaryAttachmentTests
         new KdbxWriter(writeDb).WriteTo(ms);
 
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword("pass"));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword("pass"));
         new KdbxReader(readDb).ReadFrom(ms);
 
         var readEntry = readDb.RootGroup.Entries[0];
@@ -80,7 +80,7 @@ public class BinaryAttachmentTests
     {
         byte[] shared = MakeData(7, 128);
 
-        var writeDb = Database.Create("pass");
+        var writeDb = KdbxDatabase.Create("pass");
         var e1 = new Entry();
         e1.Binaries.Add(new EntryBinary { Name = "a.bin", Data = shared });
         var e2 = new Entry();
@@ -92,7 +92,7 @@ public class BinaryAttachmentTests
         new KdbxWriter(writeDb).WriteTo(ms);
 
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword("pass"));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword("pass"));
         new KdbxReader(readDb).ReadFrom(ms);
 
         Assert.Equal(shared, readDb.RootGroup.Entries[0].Binaries[0].Data);
@@ -102,7 +102,7 @@ public class BinaryAttachmentTests
     [Fact]
     public void RoundTrip_V4_IsProtected_Preserved()
     {
-        var writeDb = Database.Create("pass");
+        var writeDb = KdbxDatabase.Create("pass");
         var entry = new Entry();
         entry.Binaries.Add(new EntryBinary { Name = "secret.bin", Data = MakeData(1, 32), IsProtected = true });
         entry.Binaries.Add(new EntryBinary { Name = "public.bin", Data = MakeData(2, 32), IsProtected = false });
@@ -112,7 +112,7 @@ public class BinaryAttachmentTests
         new KdbxWriter(writeDb).WriteTo(ms);
 
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword("pass"));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword("pass"));
         new KdbxReader(readDb).ReadFrom(ms);
 
         var readEntry = readDb.RootGroup.Entries[0];
@@ -127,7 +127,7 @@ public class BinaryAttachmentTests
     {
         byte[] payload = MakeData(99, 512);
 
-        var writeDb = Database.Create("pass", MakeV3Settings());
+        var writeDb = KdbxDatabase.Create("pass", MakeV3Settings());
         var entry = new Entry();
         entry.Binaries.Add(new EntryBinary { Name = "doc.pdf", Data = payload });
         writeDb.RootGroup.AddEntry(entry);
@@ -136,7 +136,7 @@ public class BinaryAttachmentTests
         new KdbxWriter(writeDb).WriteTo(ms);
 
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword("pass"));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword("pass"));
         new KdbxReader(readDb).ReadFrom(ms);
 
         var readEntry = readDb.RootGroup.Entries[0];

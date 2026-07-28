@@ -7,10 +7,10 @@ namespace Pidamg.KeePass.Kdbx;
 public class Entry
 {
 
-    private Database? _db = null;
+    private KdbxDatabase? _db = null;
     private Group? _pg = null;
 
-    public Database? Database => _db;
+    public KdbxDatabase? Database => _db;
     public Group? ParentGroup => _pg;
 
     public Guid Uuid { get; set; } = Guid.NewGuid();
@@ -100,7 +100,7 @@ public class Entry
 
     // ── Internal ──────────────────────────────────────────────────────────────
 
-    internal void SetDatabase(Database? db) { _db = db; }
+    internal void SetDatabase(KdbxDatabase? db) { _db = db; }
     internal void SetParentGroup(Group? group) { _pg = group; }
 
     // ── Private ───────────────────────────────────────────────────────────────

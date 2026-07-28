@@ -7,7 +7,7 @@ public interface IHeader
 {
 
     Signature Signature { get; }
-    Version Version { get; }
+    KdbxVersion Version { get; }
     Guid CipherId { get; }
     bool IsVersion4 { get; }
     bool IsCompressed { get; }

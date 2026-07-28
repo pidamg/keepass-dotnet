@@ -11,9 +11,9 @@ public class CustomIconTests
     private static readonly byte[] PngA = [0x89, 0x50, 0x4E, 0x47, 0x01]; // fake PNG A
     private static readonly byte[] PngB = [0x89, 0x50, 0x4E, 0x47, 0x02]; // fake PNG B
 
-    private static Database RoundTrip(Database writeDb, KdbxFormat format = KdbxFormat.Kdbx4)
+    private static KdbxDatabase RoundTrip(KdbxDatabase writeDb, KdbxFormat format = KdbxFormat.Kdbx4)
     {
-        var settings = new Settings { Format = format };
+        var settings = new KdbxSettings { Format = format };
         if (format == KdbxFormat.Kdbx3)
             settings.Kdf = new AesKdf(new byte[32], 1000);
         writeDb.Settings = settings;
@@ -21,12 +21,12 @@ public class CustomIconTests
         using var ms = new MemoryStream();
         new KdbxWriter(writeDb).WriteTo(ms);
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword("pass"));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword("pass"));
         new KdbxReader(readDb).ReadFrom(ms);
         return readDb;
     }
 
-    private static Database MakeDb() => Database.Create("pass");
+    private static KdbxDatabase MakeDb() => KdbxDatabase.Create("pass");
 
     // ── Icon list ─────────────────────────────────────────────────────────────
 

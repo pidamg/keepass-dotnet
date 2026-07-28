@@ -11,7 +11,7 @@ public class RealFileTests
     [Fact]
     public void Read_SimplePasswordV4_ParsesXml()
     {
-        var db = Database.Open(Helpers.Rsc("SimplePasswordV4.kdbx"), "password123");
+        var db = KdbxDatabase.Open(Helpers.Rsc("SimplePasswordV4.kdbx"), "password123");
 
         Assert.NotNull(db.Metadata);
         Assert.NotNull(db.RootGroup);
@@ -20,7 +20,7 @@ public class RealFileTests
     [Fact]
     public void Read_SimplePasswordV4_ContainsEntries()
     {
-        var db = Database.Open(Helpers.Rsc("SimplePasswordV4.kdbx"), "password123");
+        var db = KdbxDatabase.Open(Helpers.Rsc("SimplePasswordV4.kdbx"), "password123");
 
         var entries = new List<Entry>();
         Helpers.CollectEntries(db.RootGroup, entries);
@@ -30,7 +30,7 @@ public class RealFileTests
     [Fact]
     public void Read_SimplePasswordV4_ProtectedFieldsDecrypt()
     {
-        var db = Database.Open(Helpers.Rsc("SimplePasswordV4.kdbx"), "password123");
+        var db = KdbxDatabase.Open(Helpers.Rsc("SimplePasswordV4.kdbx"), "password123");
 
         var entries = new List<Entry>();
         Helpers.CollectEntries(db.RootGroup, entries);
@@ -41,7 +41,7 @@ public class RealFileTests
     public void Read_WrongPassword_Throws()
     {
         Assert.ThrowsAny<System.Exception>(() =>
-            Database.Open(Helpers.Rsc("SimplePasswordV4.kdbx"), "wrong_password"));
+            KdbxDatabase.Open(Helpers.Rsc("SimplePasswordV4.kdbx"), "wrong_password"));
     }
 
     // ── KDBX 3.x ─────────────────────────────────────────────────────────────
@@ -49,7 +49,7 @@ public class RealFileTests
     [Fact]
     public void Read_SimplePasswordV3_ChaCha20_ParsesXml()
     {
-        var db = Database.Open(Helpers.Rsc("SimplePasswordV3_ChaCha20.kdbx"), "password123");
+        var db = KdbxDatabase.Open(Helpers.Rsc("SimplePasswordV3_ChaCha20.kdbx"), "password123");
 
         Assert.NotNull(db.Metadata);
         Assert.NotNull(db.RootGroup);
@@ -58,7 +58,7 @@ public class RealFileTests
     [Fact]
     public void Read_SimplePasswordV3_ChaCha20_ContainsEntries()
     {
-        var db = Database.Open(Helpers.Rsc("SimplePasswordV3_ChaCha20.kdbx"), "password123");
+        var db = KdbxDatabase.Open(Helpers.Rsc("SimplePasswordV3_ChaCha20.kdbx"), "password123");
 
         var entries = new List<Entry>();
         Helpers.CollectEntries(db.RootGroup, entries);
@@ -68,7 +68,7 @@ public class RealFileTests
     [Fact]
     public void Read_SimplePasswordV3_ChaCha20_ProtectedFieldsDecrypt()
     {
-        var db = Database.Open(Helpers.Rsc("SimplePasswordV3_ChaCha20.kdbx"), "password123");
+        var db = KdbxDatabase.Open(Helpers.Rsc("SimplePasswordV3_ChaCha20.kdbx"), "password123");
 
         var entries = new List<Entry>();
         Helpers.CollectEntries(db.RootGroup, entries);

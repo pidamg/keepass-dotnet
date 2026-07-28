@@ -28,7 +28,7 @@ public class KeyFileTests : IDisposable
         var xml = $"""
 			<?xml version="1.0" encoding="utf-8"?>
 			<KeyFile>
-			  <Meta><Version>1.0</Version></Meta>
+			  <Meta><KdbxVersion>1.0</KdbxVersion></Meta>
 			  <Key><Data>{Convert.ToBase64String(key32)}</Data></Key>
 			</KeyFile>
 			""";
@@ -59,12 +59,12 @@ public class KeyFileTests : IDisposable
         return path;
     }
 
-    private static Database MemoryRoundTrip(Database writeDb, CompositeKey readKey)
+    private static KdbxDatabase MemoryRoundTrip(KdbxDatabase writeDb, CompositeKey readKey)
     {
         using var ms = new MemoryStream();
         new KdbxWriter(writeDb).WriteTo(ms);
         ms.Position = 0;
-        var readDb = new Database(readKey);
+        var readDb = new KdbxDatabase(readKey);
         new KdbxReader(readDb).ReadFrom(ms);
         return readDb;
     }
@@ -77,7 +77,7 @@ public class KeyFileTests : IDisposable
         var key32 = RandomNumberGenerator.GetBytes(32);
         var keyPath = WriteXmlKeyFile(key32);
 
-        var writeDb = Database.Create("pass", keyPath);
+        var writeDb = KdbxDatabase.Create("pass", keyPath);
         writeDb.Metadata.Name = "XmlKey";
 
         var readDb = MemoryRoundTrip(writeDb,
@@ -92,7 +92,7 @@ public class KeyFileTests : IDisposable
         var key32 = RandomNumberGenerator.GetBytes(32);
         var keyPath = WriteHexKeyFile(key32);
 
-        var writeDb = Database.Create("pass", keyPath);
+        var writeDb = KdbxDatabase.Create("pass", keyPath);
         writeDb.Metadata.Name = "HexKey";
 
         var readDb = MemoryRoundTrip(writeDb,
@@ -107,7 +107,7 @@ public class KeyFileTests : IDisposable
         var key32 = RandomNumberGenerator.GetBytes(32);
         var keyPath = WriteRawKeyFile(key32);
 
-        var writeDb = Database.Create("pass", keyPath);
+        var writeDb = KdbxDatabase.Create("pass", keyPath);
         writeDb.Metadata.Name = "RawKey";
 
         var readDb = MemoryRoundTrip(writeDb,
@@ -123,7 +123,7 @@ public class KeyFileTests : IDisposable
         var content = Encoding.UTF8.GetBytes("This is an arbitrary key file with some random content.");
         var keyPath = WriteArbitraryKeyFile(content);
 
-        var writeDb = Database.Create("pass", keyPath);
+        var writeDb = KdbxDatabase.Create("pass", keyPath);
         writeDb.Metadata.Name = "ArbitraryKey";
 
         var readDb = MemoryRoundTrip(writeDb,
@@ -142,7 +142,7 @@ public class KeyFileTests : IDisposable
         File.WriteAllBytes(keyPath, RandomNumberGenerator.GetBytes(32));
         File.WriteAllBytes(wrongKeyPath, RandomNumberGenerator.GetBytes(32));
 
-        var writeDb = Database.Create("pass", keyPath);
+        var writeDb = KdbxDatabase.Create("pass", keyPath);
 
         Assert.ThrowsAny<Exception>(() =>
             MemoryRoundTrip(writeDb,
@@ -155,7 +155,7 @@ public class KeyFileTests : IDisposable
         var key32 = RandomNumberGenerator.GetBytes(32);
         var keyPath = WriteRawKeyFile(key32);
 
-        var writeDb = Database.Create("correctpass", keyPath);
+        var writeDb = KdbxDatabase.Create("correctpass", keyPath);
 
         Assert.ThrowsAny<Exception>(() =>
             MemoryRoundTrip(writeDb,
@@ -168,7 +168,7 @@ public class KeyFileTests : IDisposable
         var key32 = RandomNumberGenerator.GetBytes(32);
         var keyPath = WriteRawKeyFile(key32);
 
-        var writeDb = Database.Create("pass", keyPath);
+        var writeDb = KdbxDatabase.Create("pass", keyPath);
 
         // Reading without key file → decryption must fail
         Assert.ThrowsAny<Exception>(() =>
@@ -183,7 +183,7 @@ public class KeyFileTests : IDisposable
         var keyPath = WriteRawKeyFile(key32);
 
         // Empty password + key file only
-        var writeDb = Database.Create("", keyPath);
+        var writeDb = KdbxDatabase.Create("", keyPath);
         writeDb.Metadata.Name = "EmptyPwKeyFile";
 
         var readDb = MemoryRoundTrip(writeDb,
@@ -192,7 +192,7 @@ public class KeyFileTests : IDisposable
         Assert.Equal("EmptyPwKeyFile", readDb.Metadata.Name);
     }
 
-    // ── Database.Create / Database.Open with key file ────────────────────────
+    // ── KdbxDatabase.Create / KdbxDatabase.Open with key file ────────────────────────
 
     [Fact]
     public void Database_Create_WithKeyFile_RoundTrip()
@@ -200,13 +200,13 @@ public class KeyFileTests : IDisposable
         var key32 = RandomNumberGenerator.GetBytes(32);
         var keyPath = WriteXmlKeyFile(key32);
 
-        var writeDb = Database.Create("pass", keyPath);
+        var writeDb = KdbxDatabase.Create("pass", keyPath);
         writeDb.Metadata.Name = "WithKeyFile";
 
         var path = TempPath("db.kdbx");
         writeDb.SaveAs(path);
 
-        var readDb = Database.Open(path, "pass", keyPath);
+        var readDb = KdbxDatabase.Open(path, "pass", keyPath);
         Assert.Equal("WithKeyFile", readDb.Metadata.Name);
     }
 
@@ -216,9 +216,9 @@ public class KeyFileTests : IDisposable
         var key32 = RandomNumberGenerator.GetBytes(32);
         var keyPath = WriteRawKeyFile(key32);
         var path = TempPath("db.kdbx");
-        Database.Create("correct", keyPath).SaveAs(path);
+        KdbxDatabase.Create("correct", keyPath).SaveAs(path);
 
-        Assert.ThrowsAny<Exception>(() => Database.Open(path, "wrong", keyPath));
+        Assert.ThrowsAny<Exception>(() => KdbxDatabase.Open(path, "wrong", keyPath));
     }
 
     // ── KeyFile.Generate ──────────────────────────────────────────────────────
@@ -279,7 +279,7 @@ public class KeyFileTests : IDisposable
         var keyPath = TempPath("gen.xml");
         KeyFile.Generate(keyPath, KeyFileFormat.Xml);
 
-        var writeDb = Database.Create("pass", keyPath);
+        var writeDb = KdbxDatabase.Create("pass", keyPath);
         writeDb.Metadata.Name = "GeneratedXmlKey";
 
         var readDb = MemoryRoundTrip(writeDb,
@@ -294,7 +294,7 @@ public class KeyFileTests : IDisposable
         var keyPath = TempPath("gen.bin");
         KeyFile.Generate(keyPath, KeyFileFormat.Raw);
 
-        var writeDb = Database.Create("pass", keyPath);
+        var writeDb = KdbxDatabase.Create("pass", keyPath);
         writeDb.Metadata.Name = "GeneratedRawKey";
 
         var readDb = MemoryRoundTrip(writeDb,

@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public class Settings
+public class KdbxSettings
 {
 
     public KdbxFormat Format { get; set; } = KdbxFormat.Kdbx4;
@@ -14,7 +14,7 @@ public class Settings
 
     // ── Internal helpers ──────────────────────────────────────────────────────
 
-    internal static Settings FromHeader(IHeader header, ProtectedStreamAlgorithm innerAlgo) =>
+    internal static KdbxSettings FromHeader(IHeader header, ProtectedStreamAlgorithm innerAlgo) =>
         new()
         {
             Format = header.IsVersion4 ? KdbxFormat.Kdbx4 : KdbxFormat.Kdbx3,

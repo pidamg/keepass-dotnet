@@ -13,7 +13,7 @@ public class XmlLayerTests
     [Fact]
     public void XmlReader_ParsesMeta()
     {
-        var db = Database.Open(Helpers.Rsc("SimplePasswordV4.kdbx"), "password123");
+        var db = KdbxDatabase.Open(Helpers.Rsc("SimplePasswordV4.kdbx"), "password123");
 
         Assert.NotEmpty(db.Metadata.Name);
         Assert.True(db.Metadata.ProtectPassword);
@@ -24,7 +24,7 @@ public class XmlLayerTests
     [Fact]
     public void XmlReader_ParsesEntries()
     {
-        var db = Database.Open(Helpers.Rsc("SimplePasswordV4.kdbx"), "password123");
+        var db = KdbxDatabase.Open(Helpers.Rsc("SimplePasswordV4.kdbx"), "password123");
 
         var entries = new List<Entry>();
         Helpers.CollectEntries(db.RootGroup, entries);
@@ -39,7 +39,7 @@ public class XmlLayerTests
     [Fact]
     public void XmlRoundTrip()
     {
-        var writeDb = Database.Create("testpass", new Settings { Format = KdbxFormat.Kdbx4 });
+        var writeDb = KdbxDatabase.Create("testpass", new KdbxSettings { Format = KdbxFormat.Kdbx4 });
         writeDb.Metadata.Name = "MyDatabase";
         writeDb.Metadata.ProtectPassword = true;
 
@@ -55,7 +55,7 @@ public class XmlLayerTests
         new KdbxWriter(writeDb).WriteTo(ms);
 
         ms.Position = 0;
-        var readDb = new Database(new CompositeKey().AddPassword("testpass"));
+        var readDb = new KdbxDatabase(new CompositeKey().AddPassword("testpass"));
         new KdbxReader(readDb).ReadFrom(ms);
 
         Assert.Equal("MyDatabase", readDb.Metadata.Name);

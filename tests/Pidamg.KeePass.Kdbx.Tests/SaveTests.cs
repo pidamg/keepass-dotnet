@@ -25,7 +25,7 @@ public class SaveTests : IDisposable
     [Fact]
     public void SaveAs_CreatesFile()
     {
-        var db = Database.Create("pass");
+        var db = KdbxDatabase.Create("pass");
         var path = TempFile();
 
         db.SaveAs(path);
@@ -37,7 +37,7 @@ public class SaveTests : IDisposable
     [Fact]
     public void SaveAs_ClearsHasChanges()
     {
-        var db = Database.Create("pass");
+        var db = KdbxDatabase.Create("pass");
         db.RootGroup.AddEntry(new Entry { Title = "E" });
         Assert.True(db.HasChanges);
 
@@ -49,7 +49,7 @@ public class SaveTests : IDisposable
     [Fact]
     public void SaveAs_SetsFileInfo()
     {
-        var db = Database.Create("pass");
+        var db = KdbxDatabase.Create("pass");
         var path = TempFile();
 
         db.SaveAs(path);
@@ -63,7 +63,7 @@ public class SaveTests : IDisposable
     {
         var path = TempFile();
 
-        var writeDb = Database.Create("hunter2");
+        var writeDb = KdbxDatabase.Create("hunter2");
         writeDb.Metadata.Name = "SavedV4";
         var entry = new Entry();
         entry.Title = "GitHub";
@@ -72,7 +72,7 @@ public class SaveTests : IDisposable
         writeDb.RootGroup.AddEntry(entry);
         writeDb.SaveAs(path);
 
-        var readDb = Database.Open(path, "hunter2");
+        var readDb = KdbxDatabase.Open(path, "hunter2");
 
         Assert.Equal("SavedV4", readDb.Metadata.Name);
         Assert.Single(readDb.RootGroup.Entries);
@@ -86,17 +86,17 @@ public class SaveTests : IDisposable
     public void SaveAs_ThenOpen_RoundTrip_V3()
     {
         var path = TempFile();
-        var settings = new Settings
+        var settings = new KdbxSettings
         {
             Format = KdbxFormat.Kdbx3,
             Kdf = new AesKdf(RandomNumberGenerator.GetBytes(32), 100_000UL),
         };
 
-        var writeDb = Database.Create("pass", settings);
+        var writeDb = KdbxDatabase.Create("pass", settings);
         writeDb.Metadata.Name = "SavedV3";
         writeDb.SaveAs(path);
 
-        var readDb = Database.Open(path, "pass");
+        var readDb = KdbxDatabase.Open(path, "pass");
 
         Assert.Equal("SavedV3", readDb.Metadata.Name);
     }
@@ -105,9 +105,9 @@ public class SaveTests : IDisposable
     public void SaveAs_WrongPassword_Throws()
     {
         var path = TempFile();
-        Database.Create("correctpass").SaveAs(path);
+        KdbxDatabase.Create("correctpass").SaveAs(path);
 
-        Assert.ThrowsAny<Exception>(() => Database.Open(path, "wrongpass"));
+        Assert.ThrowsAny<Exception>(() => KdbxDatabase.Open(path, "wrongpass"));
     }
 
     // ── Save ──────────────────────────────────────────────────────────────────
@@ -117,7 +117,7 @@ public class SaveTests : IDisposable
     {
         var path = TempFile();
 
-        var db = Database.Create("pass");
+        var db = KdbxDatabase.Create("pass");
         db.Metadata.Name = "v1";
         db.SaveAs(path);
         long sizeV1 = new FileInfo(path).Length;
@@ -125,14 +125,14 @@ public class SaveTests : IDisposable
         db.Metadata.Name = "version2-with-longer-name";
         db.Save();
 
-        var readDb = Database.Open(path, "pass");
+        var readDb = KdbxDatabase.Open(path, "pass");
         Assert.Equal("version2-with-longer-name", readDb.Metadata.Name);
     }
 
     [Fact]
     public void Save_WithoutFileInfo_Throws()
     {
-        var db = new Database(new CompositeKey().AddPassword("pass"));
+        var db = new KdbxDatabase(new CompositeKey().AddPassword("pass"));
 
         Assert.Throws<InvalidOperationException>(() => db.Save());
     }
@@ -144,7 +144,7 @@ public class SaveTests : IDisposable
     {
         var path = TempFile();
 
-        var writeDb = Database.Create("pass");
+        var writeDb = KdbxDatabase.Create("pass");
         for (int i = 0; i < 5; i++)
         {
             var e = new Entry();
@@ -154,7 +154,7 @@ public class SaveTests : IDisposable
         }
         writeDb.SaveAs(path);
 
-        var readDb = Database.Open(path, "pass");
+        var readDb = KdbxDatabase.Open(path, "pass");
 
         Assert.Equal(5, readDb.RootGroup.Entries.Count);
         for (int i = 0; i < 5; i++)
@@ -166,7 +166,7 @@ public class SaveTests : IDisposable
     {
         var path = TempFile();
 
-        var writeDb = Database.Create("pass");
+        var writeDb = KdbxDatabase.Create("pass");
         var sub = new Group { Name = "Work" };
         var entry = new Entry();
         entry.Title = "Laptop";
@@ -174,7 +174,7 @@ public class SaveTests : IDisposable
         writeDb.RootGroup.AddGroup(sub);
         writeDb.SaveAs(path);
 
-        var readDb = Database.Open(path, "pass");
+        var readDb = KdbxDatabase.Open(path, "pass");
 
         Assert.Single(readDb.RootGroup.Groups);
         Assert.Equal("Work", readDb.RootGroup.Groups[0].Name);
