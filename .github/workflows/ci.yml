@@ -30,6 +30,13 @@ jobs:
           cache-dependency-path: Directory.Packages.props
       - name: Restore
         run: dotnet restore Pidamg.KeePass.Kdbx.slnx
+      - name: Validate public API
+        run: >
+          dotnet format src/Pidamg.KeePass.Kdbx/Pidamg.KeePass.Kdbx.csproj
+          analyzers
+          --verify-no-changes
+          --no-restore
+          --diagnostics RS0016 RS0017
       - name: Build
         run: dotnet build Pidamg.KeePass.Kdbx.slnx --configuration Release --no-restore
       - name: Test
