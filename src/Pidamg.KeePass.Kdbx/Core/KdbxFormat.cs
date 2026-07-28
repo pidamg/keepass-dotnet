@@ -1,6 +1,7 @@
 namespace Pidamg.KeePass.Kdbx;
 
-public enum KdbxFormat {
-	Kdbx4,
-	Kdbx3,
+public enum KdbxFormat
+{
+    Kdbx4,
+    Kdbx3,
 }
