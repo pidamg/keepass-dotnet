@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Pidamg.KeePass.Kdbx</PackageId>
+    <IsPackable>true</IsPackable>
+    <Version>0.0.0-dev</Version>
+    <Description>Bibliothèque .NET pour lire et écrire les fichiers de mots de passe KeePass (.kdbx).</Description>
+    <PackageTags>keepass;kdbx;password;vault</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BouncyCastle.Cryptography" />
+  </ItemGroup>
+</Project>

@@ -311,10 +311,21 @@ Database
 ## Commandes de développement
 
 ```bash
-dotnet build    # Compiler
-dotnet test     # Lancer les tests
-dotnet format   # Formater le code
-dotnet pack     # Créer le package
+dotnet build Pidamg.KeePass.Kdbx.slnx
+dotnet test Pidamg.KeePass.Kdbx.slnx
+dotnet format Pidamg.KeePass.Kdbx.slnx
+dotnet pack src/Pidamg.KeePass.Kdbx/Pidamg.KeePass.Kdbx.csproj
+```
+
+## Structure du repository
+
+```text
+.
+├── src/Pidamg.KeePass.Kdbx/
+├── tests/Pidamg.KeePass.Kdbx.Tests/
+├── Directory.Build.props
+├── Directory.Packages.props
+└── Pidamg.KeePass.Kdbx.slnx
 ```
 
 ## Couverture des tests
