@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 internal interface IHeader
 {

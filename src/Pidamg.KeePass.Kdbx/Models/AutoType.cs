@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 /// <summary>
 /// Associates an auto-type sequence with a target window.

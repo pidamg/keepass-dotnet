@@ -1,4 +1,4 @@
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 /// <summary>
 /// Represents a named string value stored in an entry.

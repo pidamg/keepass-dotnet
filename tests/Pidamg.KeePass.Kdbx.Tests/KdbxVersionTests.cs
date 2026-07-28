@@ -1,6 +1,6 @@
 using System.IO;
 using System.Security.Cryptography;
-using Pidamg.KeePass.Kdbx;
+using Pidamg.KeePass;
 
 namespace Pidamg.KeePass.Kdbx.Tests;
 

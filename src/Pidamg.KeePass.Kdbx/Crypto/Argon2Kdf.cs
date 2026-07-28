@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.Crypto.Parameters;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 /// <summary>
 /// Identifies the Argon2 variant used for key derivation.

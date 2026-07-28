@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Linq;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 /// <summary>
 /// Identifies the serialization format of a generated key file.

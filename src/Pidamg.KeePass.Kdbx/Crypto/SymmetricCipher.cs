@@ -7,7 +7,7 @@ using Org.BouncyCastle.Crypto.Modes;
 using Org.BouncyCastle.Crypto.Paddings;
 using Org.BouncyCastle.Crypto.Parameters;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 /// <summary>
 /// Identifies a cipher used to encrypt KDBX database content.

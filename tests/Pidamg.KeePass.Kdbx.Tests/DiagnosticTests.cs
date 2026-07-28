@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using Pidamg.KeePass.Kdbx;
+using Pidamg.KeePass;
 using Xunit.Abstractions;
 
 namespace Pidamg.KeePass.Kdbx.Tests;

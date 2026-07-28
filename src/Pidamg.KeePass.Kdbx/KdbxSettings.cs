@@ -1,7 +1,7 @@
 using System;
 using System.Security.Cryptography;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 /// <summary>
 /// Configures the format and cryptographic algorithms used when saving a KDBX database.

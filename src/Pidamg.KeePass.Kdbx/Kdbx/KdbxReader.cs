@@ -6,7 +6,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 internal class KdbxReader
 {

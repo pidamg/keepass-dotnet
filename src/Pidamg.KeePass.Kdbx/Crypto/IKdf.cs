@@ -1,4 +1,4 @@
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 /// <summary>
 /// Defines a key derivation function used to transform a composite KDBX key.

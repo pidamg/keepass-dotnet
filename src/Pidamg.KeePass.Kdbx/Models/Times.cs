@@ -1,6 +1,6 @@
 using System;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 /// <summary>
 /// Represents creation, access, modification, expiration, and location timestamps for a KDBX item.

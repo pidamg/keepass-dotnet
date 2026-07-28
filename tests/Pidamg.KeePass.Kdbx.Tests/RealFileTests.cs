@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Pidamg.KeePass.Kdbx;
+using Pidamg.KeePass;
 
 namespace Pidamg.KeePass.Kdbx.Tests;
 

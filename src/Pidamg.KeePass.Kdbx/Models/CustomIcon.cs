@@ -1,6 +1,6 @@
 using System;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 /// <summary>
 /// Represents a custom icon stored in database metadata.

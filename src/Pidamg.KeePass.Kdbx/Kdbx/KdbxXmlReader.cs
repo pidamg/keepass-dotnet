@@ -7,7 +7,7 @@ using System.IO.Compression;
 using System.Text;
 using System.Xml.Linq;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 internal class KdbxXmlReader
 {

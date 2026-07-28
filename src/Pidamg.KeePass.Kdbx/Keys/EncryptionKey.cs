@@ -1,7 +1,7 @@
 using System;
 using System.Security.Cryptography;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 internal class EncryptionKey
 {

@@ -1,4 +1,4 @@
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 internal class DatabaseData
 {

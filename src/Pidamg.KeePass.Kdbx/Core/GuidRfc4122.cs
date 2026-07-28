@@ -1,7 +1,7 @@
 using System;
 using System.Buffers.Binary;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 // Conversion between .NET mixed-endian Guid and RFC 4122 big-endian bytes,
 // as used in the KDBX binary format (header UUIDs and KDF parameter maps).

@@ -12,7 +12,7 @@ dotnet add package Pidamg.KeePass.Kdbx
 ## Démarrage rapide
 
 ```csharp
-using Pidamg.KeePass.Kdbx;
+using Pidamg.KeePass;
 
 // Ouvrir une base existante
 var db = KdbxDatabase.Open("vault.kdbx", "password");

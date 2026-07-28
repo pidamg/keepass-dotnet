@@ -1,6 +1,6 @@
 using System;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 // Parses KeePass field references: {REF:WantedField@SearchIn:SearchValue}
 // WantedField / SearchIn: T=Title, U=UserName, P=Password, A=URL, N=Notes, I=UUID

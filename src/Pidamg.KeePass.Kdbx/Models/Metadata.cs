@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 /// <summary>
 /// Represents database-wide KDBX metadata.

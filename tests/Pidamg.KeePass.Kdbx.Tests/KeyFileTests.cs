@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using Pidamg.KeePass.Kdbx;
+using Pidamg.KeePass;
 
 namespace Pidamg.KeePass.Kdbx.Tests;
 

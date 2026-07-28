@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>Pidamg.KeePass.Kdbx</PackageId>
+    <RootNamespace>Pidamg.KeePass</RootNamespace>
     <IsPackable>true</IsPackable>
     <Version>0.0.0-dev</Version>
     <Description>Bibliothèque .NET pour lire et écrire les fichiers de mots de passe KeePass (.kdbx).</Description>

@@ -1,4 +1,4 @@
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 /// <summary>
 /// Represents a binary attachment stored in an entry.

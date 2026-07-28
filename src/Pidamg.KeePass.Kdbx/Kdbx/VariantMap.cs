@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Pidamg.KeePass.Kdbx;
+namespace Pidamg.KeePass;
 
 // Binary key-value map used by KDBX 4.x to store KDF parameters.
 // Format: [version (1)] { [type (1)][keyLen (4 LE)][key UTF8][valLen (4 LE)][val] }* [0x00]
