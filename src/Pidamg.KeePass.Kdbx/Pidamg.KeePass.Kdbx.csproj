@@ -9,7 +9,7 @@
     <PackageTags>keepass;kdbx;password-manager;password-vault;cryptography;security</PackageTags>
     <PackageIcon>package-icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>https://github.com/pidamg/lib-dotnet-keepass/releases/tag/v$(Version)</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/pidamg/keepass-dotnet/releases/tag/v$(Version)</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <WarningsAsErrors>$(WarningsAsErrors);CS1591</WarningsAsErrors>

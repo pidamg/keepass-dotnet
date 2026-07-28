@@ -1,6 +1,6 @@
 # Pidamg.KeePass.Kdbx — KeePass KDBX library for .NET
 
-**English** | [Français](https://github.com/pidamg/lib-dotnet-keepass/blob/main/README.fr.md)
+**English** | [Français](https://github.com/pidamg/keepass-dotnet/blob/main/README.fr.md)
 
 A .NET library for reading, creating, modifying, and saving
 [KeePass](https://keepass.info/) password databases in the KDBX format.
@@ -24,8 +24,8 @@ A .NET library for reading, creating, modifying, and saving
 ## Installation
 
 Preview packages are published to
-[GitHub Packages](https://github.com/pidamg/lib-dotnet-keepass/packages) and attached to
-[GitHub Releases](https://github.com/pidamg/lib-dotnet-keepass/releases).
+[GitHub Packages](https://github.com/pidamg/keepass-dotnet/packages) and attached to
+[GitHub Releases](https://github.com/pidamg/keepass-dotnet/releases).
 
 GitHub Packages requires an authenticated NuGet source, including for public packages. After
 [configuring GitHub Packages authentication](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-nuget-registry),
@@ -168,8 +168,8 @@ The only published runtime dependency is
 - Some advanced `<Meta>` fields do not yet have a dedicated API.
 - Passwords exposed as .NET strings cannot be reliably zeroed by the library.
 
-See the [issues](https://github.com/pidamg/lib-dotnet-keepass/issues) and
-[changelog](https://github.com/pidamg/lib-dotnet-keepass/blob/main/CHANGELOG.md) for planned and
+See the [issues](https://github.com/pidamg/keepass-dotnet/issues) and
+[changelog](https://github.com/pidamg/keepass-dotnet/blob/main/CHANGELOG.md) for planned and
 released changes.
 
 ## Development
@@ -181,13 +181,13 @@ dotnet test Pidamg.KeePass.Kdbx.slnx
 dotnet format Pidamg.KeePass.Kdbx.slnx --verify-no-changes
 ```
 
-See [`CONTRIBUTING.md`](https://github.com/pidamg/lib-dotnet-keepass/blob/main/CONTRIBUTING.md) for
+See [`CONTRIBUTING.md`](https://github.com/pidamg/keepass-dotnet/blob/main/CONTRIBUTING.md) for
 contribution, public API compatibility, and release guidelines.
 
 ## License
 
 This project is available under the
-[MIT License](https://github.com/pidamg/lib-dotnet-keepass/blob/main/LICENSE).
+[MIT License](https://github.com/pidamg/keepass-dotnet/blob/main/LICENSE).
 
 KeePass is a trademark of Dominik Reichl. This project is independent and is neither affiliated
 with nor endorsed by the KeePass project. [KeePassXC](https://github.com/keepassxreboot/keepassxc)

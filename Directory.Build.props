@@ -11,9 +11,9 @@
     <ArtifactsPath>$(MSBuildThisFileDirectory)artifacts</ArtifactsPath>
 
     <Authors>pidamg</Authors>
-    <RepositoryUrl>https://github.com/pidamg/lib-dotnet-keepass</RepositoryUrl>
+    <RepositoryUrl>https://github.com/pidamg/keepass-dotnet</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageProjectUrl>https://github.com/pidamg/lib-dotnet-keepass</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/pidamg/keepass-dotnet</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>

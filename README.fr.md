@@ -24,8 +24,8 @@ Bibliothèque .NET pour lire, créer, modifier et enregistrer des bases de mots 
 ## Installation
 
 Les préversions sont publiées dans
-[GitHub Packages](https://github.com/pidamg/lib-dotnet-keepass/packages) et jointes aux
-[GitHub Releases](https://github.com/pidamg/lib-dotnet-keepass/releases).
+[GitHub Packages](https://github.com/pidamg/keepass-dotnet/packages) et jointes aux
+[GitHub Releases](https://github.com/pidamg/keepass-dotnet/releases).
 
 GitHub Packages nécessite une source NuGet authentifiée, y compris pour les packages publics.
 Après avoir [configuré l'authentification à GitHub Packages](https://docs.github.com/fr/packages/working-with-a-github-packages-registry/working-with-the-nuget-registry),
@@ -170,7 +170,7 @@ La seule dépendance d'exécution publiée est
 - Les mots de passe exposés comme chaînes .NET ne peuvent pas être effacés de façon garantie par
   la bibliothèque.
 
-Consultez les [issues](https://github.com/pidamg/lib-dotnet-keepass/issues) et le
+Consultez les [issues](https://github.com/pidamg/keepass-dotnet/issues) et le
 [changelog](CHANGELOG.md) pour suivre les évolutions.
 
 ## Développement
