@@ -319,6 +319,9 @@ dotnet format Pidamg.KeePass.Kdbx.slnx
 dotnet pack src/Pidamg.KeePass.Kdbx/Pidamg.KeePass.Kdbx.csproj
 ```
 
+Les règles détaillées de développement, de compatibilité d'API et de publication sont disponibles
+dans [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
 ## Structure du repository
 
 ```text
