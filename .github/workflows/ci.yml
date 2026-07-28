@@ -100,6 +100,9 @@ jobs:
     needs: pack
     runs-on: ubuntu-latest
     environment: nuget.org
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/setup-dotnet@v4
         with:
@@ -108,6 +111,11 @@ jobs:
         with:
           name: nuget-package
           path: nupkgs/
+      - name: Authenticate to NuGet.org
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
       - name: Publish to NuGet.org
         run: >
           dotnet nuget push "nupkgs/*.nupkg"
@@ -115,4 +123,4 @@ jobs:
           --api-key "$NUGET_API_KEY"
           --skip-duplicate
         env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}

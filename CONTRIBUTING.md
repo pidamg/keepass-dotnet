@@ -125,7 +125,13 @@ Les préversions ne sont jamais publiées sur NuGet.org.
 La publication NuGet.org utilise :
 
 - l'environnement GitHub protégé `nuget.org` ;
-- le secret `NUGET_API_KEY`.
+- une politique NuGet.org Trusted Publishing liée au repository, au workflow `ci.yml` et à
+  l'environnement `nuget.org` ;
+- le secret d'environnement `NUGET_USER`, qui contient le nom du profil NuGet.org et non une
+  adresse e-mail.
+
+Le job demande un jeton OIDC à GitHub, puis `NuGet/login@v1` l'échange contre une clé NuGet
+temporaire. Aucune clé API permanente n'est stockée dans GitHub.
 
 Le package construit est partagé entre les deux jobs de publication afin de garantir que GitHub
 Packages et NuGet.org reçoivent exactement le même artefact.
