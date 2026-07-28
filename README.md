@@ -324,6 +324,7 @@ dotnet pack src/Pidamg.KeePass.Kdbx/Pidamg.KeePass.Kdbx.csproj
 ```text
 .
 ├── src/Pidamg.KeePass.Kdbx/
+├── tests/Pidamg.KeePass.Kdbx.IntegrationTests/
 ├── tests/Pidamg.KeePass.Kdbx.Tests/
 ├── Directory.Build.props
 ├── Directory.Packages.props
@@ -332,7 +333,10 @@ dotnet pack src/Pidamg.KeePass.Kdbx/Pidamg.KeePass.Kdbx.csproj
 
 ## Couverture des tests
 
-149 tests passants, 1 ignoré (diagnostic manuel).
+152 tests passants, 1 ignoré (diagnostic manuel).
+
+Les tests d'intégration compilent et exécutent les principaux scénarios en utilisant uniquement
+l'API publique, sans accès aux membres `internal`.
 
 ### Couverts ✓
 

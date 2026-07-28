@@ -3,6 +3,7 @@
     <Project Path="src/Pidamg.KeePass.Kdbx/Pidamg.KeePass.Kdbx.csproj" />
   </Folder>
   <Folder Name="/tests/">
+    <Project Path="tests/Pidamg.KeePass.Kdbx.IntegrationTests/Pidamg.KeePass.Kdbx.IntegrationTests.csproj" />
     <Project Path="tests/Pidamg.KeePass.Kdbx.Tests/Pidamg.KeePass.Kdbx.Tests.csproj" />
   </Folder>
 </Solution>
