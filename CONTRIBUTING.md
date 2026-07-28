@@ -31,7 +31,8 @@ Pidamg.KeePass.Kdbx.slnx
 - `Pidamg.KeePass.Kdbx.Tests` contient les tests unitaires et peut accéder aux membres
   `internal` grâce à `InternalsVisibleTo`.
 - `Pidamg.KeePass.Kdbx.IntegrationTests` utilise uniquement l'API publique, comme un projet
-  consommateur externe.
+  consommateur externe. Il référence le projet source par défaut et peut référencer un package
+  construit en définissant la propriété MSBuild `TestPackageVersion`.
 
 ## Conventions de code
 
@@ -88,6 +89,20 @@ Exécuter tous les tests :
 dotnet test Pidamg.KeePass.Kdbx.slnx --configuration Release
 ```
 
+Pour tester un package local avec les mêmes tests d'intégration :
+
+```bash
+dotnet restore tests/Pidamg.KeePass.Kdbx.IntegrationTests \
+  -p:TestPackageVersion=0.1.0-alpha.1 \
+  --source ./nupkgs \
+  --source https://api.nuget.org/v3/index.json
+
+dotnet test tests/Pidamg.KeePass.Kdbx.IntegrationTests \
+  --configuration Release \
+  --no-restore \
+  -p:TestPackageVersion=0.1.0-alpha.1
+```
+
 ## Création du package
 
 ```bash
@@ -117,8 +132,9 @@ Lorsqu'un tag `v*` est poussé :
 1. la CI compile et teste la solution ;
 2. elle valide la conformité de l'API publique ;
 3. elle crée une seule fois les packages `.nupkg` et `.snupkg` ;
-4. elle publie toutes les versions sur GitHub Packages ;
-5. elle publie également les versions stables sur NuGet.org.
+4. elle exécute les tests d'intégration contre le package `.nupkg` construit ;
+5. elle publie toutes les versions sur GitHub Packages ;
+6. elle publie également les versions stables sur NuGet.org.
 
 Les préversions ne sont jamais publiées sur NuGet.org.
 

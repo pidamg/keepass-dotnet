@@ -18,8 +18,12 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TestPackageVersion)' == ''">
     <ProjectReference Include="../../src/Pidamg.KeePass.Kdbx/Pidamg.KeePass.Kdbx.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TestPackageVersion)' != ''">
+    <PackageReference Include="Pidamg.KeePass.Kdbx" VersionOverride="$(TestPackageVersion)" />
   </ItemGroup>
 
 </Project>
