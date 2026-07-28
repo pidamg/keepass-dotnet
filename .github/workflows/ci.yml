@@ -42,8 +42,8 @@ jobs:
       - name: Test
         run: dotnet test Pidamg.KeePass.Kdbx.slnx --configuration Release --no-build
 
-  publish:
-    if: startsWith(github.ref, 'refs/tags/v')
+  publish-github-packages:
+    if: startsWith(github.ref, 'refs/tags/v') && contains(github.ref_name, '-')
     needs: test
     runs-on: ubuntu-latest
     steps:
