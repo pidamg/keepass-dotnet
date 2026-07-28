@@ -6,6 +6,8 @@
     <Description>Bibliothèque .NET pour lire et écrire les fichiers de mots de passe KeePass (.kdbx).</Description>
     <PackageTags>keepass;kdbx;password;vault</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarningsAsErrors>$(WarningsAsErrors);CS1591</WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>

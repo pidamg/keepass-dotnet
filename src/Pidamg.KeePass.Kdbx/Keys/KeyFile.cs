@@ -6,15 +6,35 @@ using System.Xml.Linq;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public enum KeyFileFormat { Xml, Raw }
+/// <summary>
+/// Identifies the serialization format of a generated key file.
+/// </summary>
+public enum KeyFileFormat
+{
+    /// <summary>
+    /// KeePass XML key-file format version 1.0.
+    /// </summary>
+    Xml,
 
+    /// <summary>
+    /// A raw 32-byte key.
+    /// </summary>
+    Raw
+}
+
+/// <summary>
+/// Provides methods for generating KeePass key files.
+/// </summary>
 public static class KeyFile
 {
 
     /// <summary>
     /// Generates a new random key file and writes it to <paramref name="path"/>.
-    /// Default format is XML (KeePass v1, interoperable with KeePassXC).
     /// </summary>
+    /// <param name="path">The path at which to create or overwrite the key file.</param>
+    /// <param name="format">The key-file format.</param>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="format"/> is not supported.</exception>
+    /// <exception cref="IOException">The key file cannot be written.</exception>
     public static void Generate(string path, KeyFileFormat format = KeyFileFormat.Xml)
     {
         var key32 = RandomNumberGenerator.GetBytes(32);

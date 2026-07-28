@@ -4,6 +4,9 @@ using System.Security.Cryptography;
 
 namespace Pidamg.KeePass.Kdbx;
 
+/// <summary>
+/// Implements the AES-based key derivation function used by KDBX.
+/// </summary>
 public class AesKdf : IKdf
 {
 
@@ -12,9 +15,22 @@ public class AesKdf : IKdf
     // UUID used in KDBX 4.x KdfParameters
     internal static readonly Guid UuidKdbx4 = new("7c02bb82-79a7-4ac0-927d-114a00648238");
 
+    /// <summary>
+    /// Gets the AES transformation seed.
+    /// </summary>
+    /// <value>The seed bytes supplied to the constructor.</value>
     public byte[] Seed { get; }
+
+    /// <summary>
+    /// Gets the number of AES transformation rounds.
+    /// </summary>
     public ulong Rounds { get; }
 
+    /// <summary>
+    /// Initializes an AES key derivation function.
+    /// </summary>
+    /// <param name="seed">The AES key used to transform the composite key.</param>
+    /// <param name="rounds">The number of transformation rounds.</param>
     public AesKdf(byte[] seed, ulong rounds)
     {
         Seed = seed;
@@ -23,6 +39,7 @@ public class AesKdf : IKdf
 
     // DerivedKey = SHA256(ECB(left, seed, rounds) ∥ ECB(right, seed, rounds))
     // where left = rawKey[0..16], right = rawKey[16..32]
+    /// <inheritdoc/>
     public byte[] Transform(byte[] rawKey)
     {
         using var aes = Aes.Create();

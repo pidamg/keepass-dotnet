@@ -6,8 +6,21 @@ using Org.BouncyCastle.Crypto.Parameters;
 
 namespace Pidamg.KeePass.Kdbx;
 
-// Inner stream algorithm IDs as stored in the KDBX header (InnerRandomStreamID field)
-public enum ProtectedStreamAlgorithm { Salsa20 = 2, ChaCha20 = 3 }
+/// <summary>
+/// Identifies the inner stream cipher used for protected XML values.
+/// </summary>
+public enum ProtectedStreamAlgorithm
+{
+    /// <summary>
+    /// The Salsa20 inner stream cipher.
+    /// </summary>
+    Salsa20 = 2,
+
+    /// <summary>
+    /// The ChaCha20 inner stream cipher.
+    /// </summary>
+    ChaCha20 = 3
+}
 
 // Stateful XOR stream used to encrypt/decrypt Protected="True" XML fields.
 // The keystream position advances with each call to Process() — fields must be

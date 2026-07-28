@@ -9,7 +9,31 @@ using Org.BouncyCastle.Crypto.Parameters;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public enum CipherAlgorithm { Aes128Cbc, Aes256Cbc, ChaCha20, Twofish256Cbc }
+/// <summary>
+/// Identifies a cipher used to encrypt KDBX database content.
+/// </summary>
+public enum CipherAlgorithm
+{
+    /// <summary>
+    /// AES-128 in CBC mode.
+    /// </summary>
+    Aes128Cbc,
+
+    /// <summary>
+    /// AES-256 in CBC mode.
+    /// </summary>
+    Aes256Cbc,
+
+    /// <summary>
+    /// ChaCha20.
+    /// </summary>
+    ChaCha20,
+
+    /// <summary>
+    /// Twofish-256 in CBC mode.
+    /// </summary>
+    Twofish256Cbc
+}
 
 internal class SymmetricCipher
 {

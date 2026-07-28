@@ -8,34 +8,61 @@ using System.Xml.Linq;
 
 namespace Pidamg.KeePass.Kdbx;
 
-// Composite key = SHA256(component₁ ∥ component₂ ∥ …)
-// Each component is 32 bytes:
-//   password  → SHA256(UTF8(password))
-//   key file  → 32-byte key extracted from the file (XML, hex, raw, or SHA256 fallback)
+/// <summary>
+/// Builds the composite key used to unlock a KDBX database.
+/// </summary>
+/// <remarks>
+/// A composite key can contain password and key-file components. Components are combined in the
+/// order in which they are added.
+/// </remarks>
 public class CompositeKey
 {
 
     private readonly List<byte[]> _components = [];
 
+    /// <summary>
+    /// Initializes an empty composite key.
+    /// </summary>
     public CompositeKey() { }
 
+    /// <summary>
+    /// Initializes a composite key with a password component.
+    /// </summary>
+    /// <param name="password">The database password.</param>
     public CompositeKey(string password)
     {
         AddPassword(password);
     }
 
+    /// <summary>
+    /// Initializes a composite key with password and key-file components.
+    /// </summary>
+    /// <param name="password">The database password.</param>
+    /// <param name="keyFile">The path to a KeePass key file.</param>
+    /// <exception cref="IOException">The key file cannot be read.</exception>
     public CompositeKey(string password, string keyFile)
     {
         AddPassword(password);
         AddKeyFile(keyFile);
     }
 
+    /// <summary>
+    /// Adds a password component.
+    /// </summary>
+    /// <param name="password">The database password.</param>
+    /// <returns>This instance, for fluent composition.</returns>
     public CompositeKey AddPassword(string password)
     {
         _components.Add(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
         return this;
     }
 
+    /// <summary>
+    /// Adds a component read from a KeePass key file.
+    /// </summary>
+    /// <param name="path">The path to the key file.</param>
+    /// <returns>This instance, for fluent composition.</returns>
+    /// <exception cref="IOException">The key file cannot be read.</exception>
     public CompositeKey AddKeyFile(string path)
     {
         _components.Add(ReadKeyFile(path));
