@@ -136,6 +136,7 @@ Lorsqu'un tag `v*` est poussé :
 4. elle exécute les tests d'intégration contre le package `.nupkg` construit ;
 5. elle publie toutes les versions sur GitHub Packages ;
 6. elle publie également les versions stables sur NuGet.org.
+7. elle crée une GitHub Release avec les notes extraites de `CHANGELOG.md` et les packages.
 
 Les préversions ne sont jamais publiées sur NuGet.org.
 
@@ -152,6 +153,10 @@ temporaire. Aucune clé API permanente n'est stockée dans GitHub.
 
 Le package construit est partagé entre les deux jobs de publication afin de garantir que GitHub
 Packages et NuGet.org reçoivent exactement le même artefact.
+
+Avant de créer un tag, ajoutez une section datée correspondant exactement à sa version dans
+`CHANGELOG.md`. Par exemple, le tag `v0.1.0-beta.1` nécessite une section
+`## [0.1.0-beta.1] - YYYY-MM-DD`.
 
 ## Pull requests
 
