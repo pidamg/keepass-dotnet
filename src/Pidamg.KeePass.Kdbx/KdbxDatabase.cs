@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public class KdbxDatabase : IDisposable
+public sealed class KdbxDatabase : IDisposable
 {
 
     public FileInfo? FileInfo { get; private set; }
@@ -60,7 +60,9 @@ public class KdbxDatabase : IDisposable
 
     // ── Factory ───────────────────────────────────────────────────────────────
 
-    public static KdbxDatabase Create(string password, KdbxSettings? settings = null)
+    public static KdbxDatabase Create(string password) => Create(password, settings: null);
+
+    public static KdbxDatabase Create(string password, KdbxSettings? settings)
     {
         var db = new KdbxDatabase(new CompositeKey(password));
         db.Settings = settings ?? new KdbxSettings();
@@ -70,7 +72,9 @@ public class KdbxDatabase : IDisposable
         return db;
     }
 
-    public static KdbxDatabase Create(string password, string keyFile, KdbxSettings? settings = null)
+    public static KdbxDatabase Create(string password, string keyFile) => Create(password, keyFile, settings: null);
+
+    public static KdbxDatabase Create(string password, string keyFile, KdbxSettings? settings)
     {
         var db = new KdbxDatabase(new CompositeKey(password, keyFile));
         db.Settings = settings ?? new KdbxSettings();
@@ -144,7 +148,7 @@ public class KdbxDatabase : IDisposable
 
     // ── IDisposable ───────────────────────────────────────────────────────────
 
-    protected virtual void Dispose(bool disposing)
+    private void Dispose(bool disposing)
     {
         if (disposing)
         {

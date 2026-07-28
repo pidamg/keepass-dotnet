@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public class KdbxHeader : IHeader
+internal class KdbxHeader : IHeader
 {
 
     public static readonly Signature ValidSignature = new(0x9AA2D903, 0xB54BFB67);
@@ -80,15 +80,21 @@ public class KdbxHeader : IHeader
         h.IsCompressed = compress;
         h.MasterSeed = RandomBytes(32);
         h.EncryptionIV = RandomBytes(ProtectedStream.GetIvSize(cipher));
-        h.KdfParameters = kdf?.Parameters() ?? new VariantMap(new Dictionary<string, object>
+        h.KdfParameters = kdf switch
         {
-            ["$UUID"] = GuidRfc4122.ToBytes(Argon2Kdf.Argon2idUuid),
-            ["S"] = RandomBytes(32),
-            ["P"] = (uint)2,
-            ["M"] = (ulong)(64 * 1024 * 1024), // 64 MiB stored as bytes (KDBX convention)
-            ["I"] = (ulong)2,
-            ["V"] = (uint)0x13,
-        });
+            AesKdf aesKdf => aesKdf.Parameters(),
+            Argon2Kdf argon2Kdf => argon2Kdf.Parameters(),
+            null => new VariantMap(new Dictionary<string, object>
+            {
+                ["$UUID"] = GuidRfc4122.ToBytes(Argon2Kdf.Argon2idUuid),
+                ["S"] = RandomBytes(32),
+                ["P"] = (uint)2,
+                ["M"] = (ulong)(64 * 1024 * 1024),
+                ["I"] = (ulong)2,
+                ["V"] = (uint)0x13,
+            }),
+            _ => throw new NotSupportedException($"Unsupported KDF type: {kdf.GetType().Name}"),
+        };
         return h;
     }
 

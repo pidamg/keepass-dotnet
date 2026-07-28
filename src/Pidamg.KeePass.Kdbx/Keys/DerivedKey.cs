@@ -1,6 +1,6 @@
 namespace Pidamg.KeePass.Kdbx;
 
-public class DerivedKey
+internal class DerivedKey
 {
 
     private readonly byte[] _key;

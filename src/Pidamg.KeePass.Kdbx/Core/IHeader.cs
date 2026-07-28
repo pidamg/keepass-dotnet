@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public interface IHeader
+internal interface IHeader
 {
 
     Signature Signature { get; }

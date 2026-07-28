@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public class EncryptionKey
+internal class EncryptionKey
 {
 
     private readonly byte[] _key;

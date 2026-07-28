@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public class KdbxXmlWriter
+internal class KdbxXmlWriter
 {
 
     private readonly KdbxDatabase _db;

@@ -8,7 +8,7 @@ namespace Pidamg.KeePass.Kdbx;
 
 // Binary key-value map used by KDBX 4.x to store KDF parameters.
 // Format: [version (1)] { [type (1)][keyLen (4 LE)][key UTF8][valLen (4 LE)][val] }* [0x00]
-public class VariantMap
+internal class VariantMap
 {
 
     private readonly Dictionary<string, object> _data;

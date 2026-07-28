@@ -14,5 +14,13 @@
 
   <ItemGroup>
     <PackageReference Include="BouncyCastle.Cryptography" />
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Pidamg.KeePass.Kdbx.Tests" />
   </ItemGroup>
 </Project>

@@ -8,9 +8,9 @@ public class AesKdf : IKdf
 {
 
     // UUID used in KDBX 3.x KdfParameters (and by some KDBX 4.x writers for compatibility)
-    public static readonly Guid UuidKdbx3 = new("c9d9f39a-628a-4460-bf74-0d08c18a4fea");
+    internal static readonly Guid UuidKdbx3 = new("c9d9f39a-628a-4460-bf74-0d08c18a4fea");
     // UUID used in KDBX 4.x KdfParameters
-    public static readonly Guid UuidKdbx4 = new("7c02bb82-79a7-4ac0-927d-114a00648238");
+    internal static readonly Guid UuidKdbx4 = new("7c02bb82-79a7-4ac0-927d-114a00648238");
 
     public byte[] Seed { get; }
     public ulong Rounds { get; }
@@ -50,7 +50,7 @@ public class AesKdf : IKdf
         return SHA256.HashData(combined);
     }
 
-    public VariantMap Parameters() => new(new Dictionary<string, object>
+    internal VariantMap Parameters() => new(new Dictionary<string, object>
     {
         ["$UUID"] = GuidRfc4122.ToBytes(UuidKdbx4),
         ["S"] = Seed,

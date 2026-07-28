@@ -49,7 +49,7 @@ public class CompositeKey
         _components.Clear();
     }
 
-    public byte[] GetRawKey()
+    internal byte[] GetRawKey()
     {
         if (_components.Count == 0)
             throw new InvalidOperationException("CompositeKey has no components.");

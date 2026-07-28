@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public class KdbxWriter
+internal class KdbxWriter
 {
 
     private const int BlockSize = 1024 * 1024; // 1 MiB

@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public class KdbxReader
+internal class KdbxReader
 {
 
     private readonly KdbxDatabase _db;

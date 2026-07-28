@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public sealed class Signature : IEquatable<Signature>
+internal sealed class Signature : IEquatable<Signature>
 {
 
     public readonly UInt32 Sign1;

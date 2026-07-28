@@ -3,11 +3,11 @@ using System.IO;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public class KdbxVersion : IEquatable<KdbxVersion>, IComparable<KdbxVersion>
+public sealed class KdbxVersion : IEquatable<KdbxVersion>, IComparable<KdbxVersion>
 {
 
-    public readonly ushort Major;
-    public readonly ushort Minor;
+    public ushort Major { get; }
+    public ushort Minor { get; }
     public bool IsZero => Major == 0 && Minor == 0;
 
     public KdbxVersion()
@@ -56,26 +56,26 @@ public class KdbxVersion : IEquatable<KdbxVersion>, IComparable<KdbxVersion>
     }
 
     // In KDBX the version field is [Minor LE16][Major LE16]
-    public static KdbxVersion Read(BinaryReader reader)
+    internal static KdbxVersion Read(BinaryReader reader)
     {
         ushort minor = reader.ReadUInt16();
         ushort major = reader.ReadUInt16();
         return new KdbxVersion(major, minor);
     }
 
-    public static KdbxVersion Read(Stream stream)
+    internal static KdbxVersion Read(Stream stream)
     {
         using var reader = new BinaryReader(stream, System.Text.Encoding.UTF8, leaveOpen: true);
         return Read(reader);
     }
 
-    public void Write(BinaryWriter writer)
+    internal void Write(BinaryWriter writer)
     {
         writer.Write(Minor);
         writer.Write(Major);
     }
 
-    public void Write(Stream stream)
+    internal void Write(Stream stream)
     {
         using var writer = new BinaryWriter(stream, System.Text.Encoding.UTF8, leaveOpen: true);
         Write(writer);

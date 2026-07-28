@@ -12,7 +12,7 @@ public enum ProtectedStreamAlgorithm { Salsa20 = 2, ChaCha20 = 3 }
 // Stateful XOR stream used to encrypt/decrypt Protected="True" XML fields.
 // The keystream position advances with each call to Process() — fields must be
 // processed in the same order during read and write.
-public class ProtectedStream
+internal class ProtectedStream
 {
 
     private readonly IStreamCipher _cipher;

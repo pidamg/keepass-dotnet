@@ -5,7 +5,7 @@ namespace Pidamg.KeePass.Kdbx;
 
 // Conversion between .NET mixed-endian Guid and RFC 4122 big-endian bytes,
 // as used in the KDBX binary format (header UUIDs and KDF parameter maps).
-public static class GuidRfc4122
+internal static class GuidRfc4122
 {
 
     // .NET layout: data1(LE4) | data2(LE2) | data3(LE2) | data4(8 bytes, big-endian)

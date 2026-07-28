@@ -11,7 +11,7 @@ namespace Pidamg.KeePass.Kdbx;
 
 public enum CipherAlgorithm { Aes128Cbc, Aes256Cbc, ChaCha20, Twofish256Cbc }
 
-public class SymmetricCipher
+internal class SymmetricCipher
 {
 
     // CipherID UUIDs from the KDBX header (RFC 4122 big-endian, converted via ReadUuid)

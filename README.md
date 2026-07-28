@@ -67,8 +67,10 @@ new KdbxDatabase(string path, string password)
 new KdbxDatabase(string path, string password, string keyFile)
 
 // Factories
-KdbxDatabase.Create(string password, KdbxSettings? settings = null)
-KdbxDatabase.Create(string password, string keyFile, KdbxSettings? settings = null)
+KdbxDatabase.Create(string password)
+KdbxDatabase.Create(string password, KdbxSettings? settings)
+KdbxDatabase.Create(string password, string keyFile)
+KdbxDatabase.Create(string password, string keyFile, KdbxSettings? settings)
 KdbxDatabase.Open(string path, string password, string? keyFile = null)
 
 // Propriétés

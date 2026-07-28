@@ -9,8 +9,8 @@ public enum Argon2Type { D, Id }
 public class Argon2Kdf : IKdf
 {
 
-    public static readonly System.Guid Argon2dUuid = new("ef636ddf-8c29-444b-91f7-a9a403e30a0c");
-    public static readonly System.Guid Argon2idUuid = new("9e298b19-6db4-4830-bda5-57f0f7ca20c7");
+    internal static readonly System.Guid Argon2dUuid = new("ef636ddf-8c29-444b-91f7-a9a403e30a0c");
+    internal static readonly System.Guid Argon2idUuid = new("9e298b19-6db4-4830-bda5-57f0f7ca20c7");
 
     public byte[] Salt { get; }
     public int Parallelism { get; }
@@ -49,7 +49,7 @@ public class Argon2Kdf : IKdf
         return result;
     }
 
-    public VariantMap Parameters() => new(new Dictionary<string, object>
+    internal VariantMap Parameters() => new(new Dictionary<string, object>
     {
         ["$UUID"] = GuidRfc4122.ToBytes(Type == Argon2Type.Id ? Argon2idUuid : Argon2dUuid),
         ["S"] = Salt,

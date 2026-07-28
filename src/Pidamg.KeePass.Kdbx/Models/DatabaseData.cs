@@ -1,6 +1,6 @@
 namespace Pidamg.KeePass.Kdbx;
 
-public class DatabaseData
+internal class DatabaseData
 {
     public Metadata Metadata { get; }
     public Group RootGroup { get; }

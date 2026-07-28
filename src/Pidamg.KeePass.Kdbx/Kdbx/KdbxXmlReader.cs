@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace Pidamg.KeePass.Kdbx;
 
-public class KdbxXmlReader
+internal class KdbxXmlReader
 {
 
     private readonly KdbxDatabase _db;
