@@ -254,10 +254,10 @@ static Pidamg.KeePass.KdbxDatabase.Create(string! password, string! keyFile) -> 
 static Pidamg.KeePass.KdbxDatabase.Create(string! password, string! keyFile, Pidamg.KeePass.KdbxSettings? settings) -> Pidamg.KeePass.KdbxDatabase!
 static Pidamg.KeePass.KdbxDatabase.Open(string! path, string! password, string? keyFile = null) -> Pidamg.KeePass.KdbxDatabase!
 static Pidamg.KeePass.KdbxVersion.operator !=(Pidamg.KeePass.KdbxVersion? v1, Pidamg.KeePass.KdbxVersion? v2) -> bool
-static Pidamg.KeePass.KdbxVersion.operator <(Pidamg.KeePass.KdbxVersion! v1, Pidamg.KeePass.KdbxVersion! v2) -> bool
-static Pidamg.KeePass.KdbxVersion.operator <=(Pidamg.KeePass.KdbxVersion! v1, Pidamg.KeePass.KdbxVersion! v2) -> bool
+static Pidamg.KeePass.KdbxVersion.operator <(Pidamg.KeePass.KdbxVersion? v1, Pidamg.KeePass.KdbxVersion? v2) -> bool
+static Pidamg.KeePass.KdbxVersion.operator <=(Pidamg.KeePass.KdbxVersion? v1, Pidamg.KeePass.KdbxVersion? v2) -> bool
 static Pidamg.KeePass.KdbxVersion.operator ==(Pidamg.KeePass.KdbxVersion? v1, Pidamg.KeePass.KdbxVersion? v2) -> bool
-static Pidamg.KeePass.KdbxVersion.operator >(Pidamg.KeePass.KdbxVersion! v1, Pidamg.KeePass.KdbxVersion! v2) -> bool
-static Pidamg.KeePass.KdbxVersion.operator >=(Pidamg.KeePass.KdbxVersion! v1, Pidamg.KeePass.KdbxVersion! v2) -> bool
+static Pidamg.KeePass.KdbxVersion.operator >(Pidamg.KeePass.KdbxVersion? v1, Pidamg.KeePass.KdbxVersion? v2) -> bool
+static Pidamg.KeePass.KdbxVersion.operator >=(Pidamg.KeePass.KdbxVersion? v1, Pidamg.KeePass.KdbxVersion? v2) -> bool
 static Pidamg.KeePass.KeyFile.Generate(string! path, Pidamg.KeePass.KeyFileFormat format = Pidamg.KeePass.KeyFileFormat.Xml) -> void
 static Pidamg.KeePass.Times.Create() -> Pidamg.KeePass.Times!

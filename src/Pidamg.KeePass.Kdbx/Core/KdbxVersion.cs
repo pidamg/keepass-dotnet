@@ -145,9 +145,9 @@ public sealed class KdbxVersion : IEquatable<KdbxVersion>, IComparable<KdbxVersi
     /// <param name="v1">The first version.</param>
     /// <param name="v2">The second version.</param>
     /// <returns><see langword="true"/> when <paramref name="v1"/> is greater; otherwise, <see langword="false"/>.</returns>
-    public static bool operator >(KdbxVersion v1, KdbxVersion v2)
+    public static bool operator >(KdbxVersion? v1, KdbxVersion? v2)
     {
-        return v1.CompareTo(v2) > 0;
+        return Compare(v1, v2) > 0;
     }
 
     /// <summary>
@@ -159,9 +159,9 @@ public sealed class KdbxVersion : IEquatable<KdbxVersion>, IComparable<KdbxVersi
     /// <see langword="true"/> when <paramref name="v1"/> is greater than or equal to
     /// <paramref name="v2"/>; otherwise, <see langword="false"/>.
     /// </returns>
-    public static bool operator >=(KdbxVersion v1, KdbxVersion v2)
+    public static bool operator >=(KdbxVersion? v1, KdbxVersion? v2)
     {
-        return v1.CompareTo(v2) >= 0;
+        return Compare(v1, v2) >= 0;
     }
 
     /// <summary>
@@ -170,9 +170,9 @@ public sealed class KdbxVersion : IEquatable<KdbxVersion>, IComparable<KdbxVersi
     /// <param name="v1">The first version.</param>
     /// <param name="v2">The second version.</param>
     /// <returns><see langword="true"/> when <paramref name="v1"/> is less; otherwise, <see langword="false"/>.</returns>
-    public static bool operator <(KdbxVersion v1, KdbxVersion v2)
+    public static bool operator <(KdbxVersion? v1, KdbxVersion? v2)
     {
-        return v1.CompareTo(v2) < 0;
+        return Compare(v1, v2) < 0;
     }
 
     /// <summary>
@@ -184,8 +184,15 @@ public sealed class KdbxVersion : IEquatable<KdbxVersion>, IComparable<KdbxVersi
     /// <see langword="true"/> when <paramref name="v1"/> is less than or equal to
     /// <paramref name="v2"/>; otherwise, <see langword="false"/>.
     /// </returns>
-    public static bool operator <=(KdbxVersion v1, KdbxVersion v2)
+    public static bool operator <=(KdbxVersion? v1, KdbxVersion? v2)
     {
-        return v1.CompareTo(v2) <= 0;
+        return Compare(v1, v2) <= 0;
+    }
+
+    private static int Compare(KdbxVersion? v1, KdbxVersion? v2)
+    {
+        if (ReferenceEquals(v1, v2)) return 0;
+        if (v1 is null) return -1;
+        return v1.CompareTo(v2);
     }
 }

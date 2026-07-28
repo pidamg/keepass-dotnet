@@ -28,11 +28,26 @@ public class KeyFileTests : IDisposable
         var xml = $"""
 			<?xml version="1.0" encoding="utf-8"?>
 			<KeyFile>
-			  <Meta><KdbxVersion>1.0</KdbxVersion></Meta>
+			  <Meta><Version>1.0</Version></Meta>
 			  <Key><Data>{Convert.ToBase64String(key32)}</Data></Key>
 			</KeyFile>
-			""";
+			""".TrimStart();
         var path = TempPath("key.xml");
+        File.WriteAllText(path, xml, Encoding.UTF8);
+        return path;
+    }
+
+    private string WriteXmlV2KeyFile(byte[] key32, string? hash = null)
+    {
+        hash ??= Convert.ToHexString(SHA256.HashData(key32).AsSpan(0, 4));
+        var xml = $"""
+			<?xml version="1.0" encoding="utf-8"?>
+			<KeyFile>
+			  <Meta><Version>2.0</Version></Meta>
+			  <Key><Data Hash="{hash}">{Convert.ToHexString(key32)}</Data></Key>
+			</KeyFile>
+			""".TrimStart();
+        var path = TempPath("key-v2.keyx");
         File.WriteAllText(path, xml, Encoding.UTF8);
         return path;
     }
@@ -76,6 +91,7 @@ public class KeyFileTests : IDisposable
     {
         var key32 = RandomNumberGenerator.GetBytes(32);
         var keyPath = WriteXmlKeyFile(key32);
+        var key = new CompositeKey().AddKeyFile(keyPath);
 
         var writeDb = KdbxDatabase.Create("pass", keyPath);
         writeDb.Metadata.Name = "XmlKey";
@@ -83,7 +99,25 @@ public class KeyFileTests : IDisposable
         var readDb = MemoryRoundTrip(writeDb,
             new CompositeKey().AddPassword("pass").AddKeyFile(keyPath));
 
+        Assert.Equal(SHA256.HashData(key32), key.GetRawKey());
         Assert.Equal("XmlKey", readDb.Metadata.Name);
+    }
+
+    [Fact]
+    public void RoundTrip_XmlV2KeyFile()
+    {
+        var key32 = RandomNumberGenerator.GetBytes(32);
+        var keyPath = WriteXmlV2KeyFile(key32);
+        var key = new CompositeKey().AddKeyFile(keyPath);
+
+        var writeDb = KdbxDatabase.Create("pass", keyPath);
+        writeDb.Metadata.Name = "XmlV2Key";
+
+        var readDb = MemoryRoundTrip(writeDb,
+            new CompositeKey().AddPassword("pass").AddKeyFile(keyPath));
+
+        Assert.Equal(SHA256.HashData(key32), key.GetRawKey());
+        Assert.Equal("XmlV2Key", readDb.Metadata.Name);
     }
 
     [Fact]
@@ -147,6 +181,17 @@ public class KeyFileTests : IDisposable
         Assert.ThrowsAny<Exception>(() =>
             MemoryRoundTrip(writeDb,
                 new CompositeKey().AddPassword("pass").AddKeyFile(wrongKeyPath)));
+    }
+
+    [Fact]
+    public void XmlV2KeyFile_WithInvalidHash_Throws()
+    {
+        var key32 = RandomNumberGenerator.GetBytes(32);
+        var validHash = Convert.ToHexString(SHA256.HashData(key32).AsSpan(0, 4));
+        var invalidFirstCharacter = validHash[0] == '0' ? '1' : '0';
+        var keyPath = WriteXmlV2KeyFile(key32, invalidFirstCharacter + validHash[1..]);
+
+        Assert.Throws<InvalidDataException>(() => new CompositeKey().AddKeyFile(keyPath));
     }
 
     [Fact]

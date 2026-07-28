@@ -151,7 +151,7 @@ Argon2id.
 | Compression GZip | Oui | Oui |
 | Pièces jointes binaires | Oui | Oui |
 | Champs protégés | Oui | Oui |
-| Fichiers de clé XML v1, bruts et hérités | Oui | XML v1 et brut |
+| Fichiers de clé XML v1/v2, bruts et hérités | Oui | XML v1 et brut |
 
 | Rôle | Algorithmes |
 |---|---|

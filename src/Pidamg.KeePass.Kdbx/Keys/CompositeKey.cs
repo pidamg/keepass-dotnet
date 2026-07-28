@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Pidamg.KeePass;
@@ -63,6 +64,7 @@ public class CompositeKey
     /// <param name="path">The path to the key file.</param>
     /// <returns>This instance, for fluent composition.</returns>
     /// <exception cref="IOException">The key file cannot be read.</exception>
+    /// <exception cref="InvalidDataException">The file is a malformed KeePass XML key file.</exception>
     public CompositeKey AddKeyFile(string path)
     {
         _components.Add(ReadKeyFile(path));
@@ -112,18 +114,52 @@ public class CompositeKey
     private static bool TryParseXmlKeyFile(byte[] data, out byte[]? key)
     {
         key = null;
+
+        XDocument doc;
         try
         {
-            var doc = XDocument.Parse(Encoding.UTF8.GetString(data));
-            var dataElement = doc.Root?.Element("Key")?.Element("Data");
-            if (dataElement is null) return false;
-            key = Convert.FromBase64String(dataElement.Value.Trim());
-            return key.Length == 32;
+            doc = XDocument.Parse(Encoding.UTF8.GetString(data).TrimStart('\uFEFF'));
         }
-        catch
+        catch (XmlException)
         {
             return false;
         }
+
+        if (doc.Root?.Name.LocalName != "KeyFile")
+            return false;
+
+        var dataElement = doc.Root.Element("Key")?.Element("Data")
+            ?? throw new InvalidDataException("The KeePass XML key file does not contain key data.");
+        var version = doc.Root.Element("Meta")?.Element("Version")?.Value.Trim();
+
+        try
+        {
+            key = version?.StartsWith("2.", StringComparison.Ordinal) == true
+                ? Convert.FromHexString(string.Concat(dataElement.Value.Where(c => !char.IsWhiteSpace(c))))
+                : Convert.FromBase64String(dataElement.Value.Trim());
+        }
+        catch (FormatException ex)
+        {
+            throw new InvalidDataException("The KeePass XML key file contains invalid key data.", ex);
+        }
+
+        if (key.Length != 32)
+            throw new InvalidDataException("A KeePass XML key file must contain a 32-byte key.");
+
+        if (version?.StartsWith("2.", StringComparison.Ordinal) == true)
+            ValidateXmlV2Hash(dataElement, key);
+
+        return true;
+    }
+
+    private static void ValidateXmlV2Hash(XElement dataElement, byte[] key)
+    {
+        var actualHash = dataElement.Attribute("Hash")?.Value.Trim()
+            ?? throw new InvalidDataException("A KeePass XML v2 key file must contain a key hash.");
+        var expectedHash = Convert.ToHexString(SHA256.HashData(key).AsSpan(0, 4));
+
+        if (!actualHash.Equals(expectedHash, StringComparison.OrdinalIgnoreCase))
+            throw new InvalidDataException("The KeePass XML v2 key-file hash is invalid.");
     }
 
     private static bool TryParseHex(byte[] data, out byte[]? key)

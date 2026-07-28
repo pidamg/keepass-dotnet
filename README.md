@@ -151,7 +151,7 @@ Argon2id.
 | GZip compression | Yes | Yes |
 | Binary attachments | Yes | Yes |
 | Protected values | Yes | Yes |
-| XML v1, raw, and legacy key files | Yes | XML v1 and raw |
+| XML v1/v2, raw, and legacy key files | Yes | XML v1 and raw |
 
 | Role | Algorithms |
 |---|---|

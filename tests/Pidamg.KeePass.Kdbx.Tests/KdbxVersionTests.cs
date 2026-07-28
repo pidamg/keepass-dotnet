@@ -87,4 +87,18 @@ public class KdbxVersionTests
         Assert.True(v4 >= new KdbxVersion(4, 1));
         Assert.Equal(new KdbxVersion(4, 1), v4);
     }
+
+    [Fact]
+    public void Version_Comparison_OrdersNullBeforeVersion()
+    {
+        KdbxVersion? missing = null;
+        var version = new KdbxVersion(4, 1);
+
+        Assert.True(missing < version);
+        Assert.True(missing <= version);
+        Assert.True(version > missing);
+        Assert.True(version >= missing);
+        Assert.True(missing <= null);
+        Assert.True(missing >= null);
+    }
 }
