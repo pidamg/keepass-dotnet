@@ -115,6 +115,7 @@ Le package doit contenir :
 
 - `Pidamg.KeePass.Kdbx.dll` ;
 - la documentation XML pour IntelliSense ;
+- l'icône `package-icon.png` ;
 - les métadonnées du repository et de la licence ;
 - un package de symboles `.snupkg`.
 
