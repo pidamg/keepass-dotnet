@@ -7,6 +7,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-07-29
+
 ### Changed
 
 - Established the current public API as the compatibility baseline for the stable release.
@@ -55,7 +57,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Added XML IntelliSense documentation and public API compatibility validation.
 - Added unit and public integration test suites.
 
-[Unreleased]: https://github.com/pidamg/keepass-dotnet/compare/v0.1.0-beta.1...HEAD
+[Unreleased]: https://github.com/pidamg/keepass-dotnet/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/pidamg/keepass-dotnet/compare/v0.1.0-beta.1...v0.1.0
 [0.1.0-beta.1]: https://github.com/pidamg/keepass-dotnet/compare/v0.1.0-alpha.3...v0.1.0-beta.1
 [0.1.0-alpha.3]: https://github.com/pidamg/keepass-dotnet/compare/v0.1.0-alpha.2...v0.1.0-alpha.3
 [0.1.0-alpha.2]: https://github.com/pidamg/keepass-dotnet/compare/v0.1.0-alpha.1...v0.1.0-alpha.2
