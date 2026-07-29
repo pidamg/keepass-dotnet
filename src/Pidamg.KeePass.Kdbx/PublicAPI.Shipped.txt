@@ -1,1 +1,263 @@
 #nullable enable
+override Pidamg.KeePass.KdbxVersion.Equals(object? other) -> bool
+override Pidamg.KeePass.KdbxVersion.GetHashCode() -> int
+override Pidamg.KeePass.KdbxVersion.ToString() -> string!
+Pidamg.KeePass.AesKdf
+Pidamg.KeePass.AesKdf.AesKdf(byte[]! seed, ulong rounds) -> void
+Pidamg.KeePass.AesKdf.Rounds.get -> ulong
+Pidamg.KeePass.AesKdf.Seed.get -> byte[]!
+Pidamg.KeePass.AesKdf.Transform(byte[]! rawKey) -> byte[]!
+Pidamg.KeePass.Argon2Kdf
+Pidamg.KeePass.Argon2Kdf.Argon2Kdf(byte[]! salt, int parallelism, int memoryKib, int iterations, Pidamg.KeePass.Argon2Type type = Pidamg.KeePass.Argon2Type.Id) -> void
+Pidamg.KeePass.Argon2Kdf.Iterations.get -> int
+Pidamg.KeePass.Argon2Kdf.MemoryKib.get -> int
+Pidamg.KeePass.Argon2Kdf.Parallelism.get -> int
+Pidamg.KeePass.Argon2Kdf.Salt.get -> byte[]!
+Pidamg.KeePass.Argon2Kdf.Transform(byte[]! rawKey) -> byte[]!
+Pidamg.KeePass.Argon2Kdf.Type.get -> Pidamg.KeePass.Argon2Type
+Pidamg.KeePass.Argon2Type
+Pidamg.KeePass.Argon2Type.D = 0 -> Pidamg.KeePass.Argon2Type
+Pidamg.KeePass.Argon2Type.Id = 1 -> Pidamg.KeePass.Argon2Type
+Pidamg.KeePass.AutoType
+Pidamg.KeePass.AutoType.Associations.get -> System.Collections.Generic.List<Pidamg.KeePass.AutoTypeAssociation!>!
+Pidamg.KeePass.AutoType.Associations.set -> void
+Pidamg.KeePass.AutoType.AutoType() -> void
+Pidamg.KeePass.AutoType.Clone() -> Pidamg.KeePass.AutoType!
+Pidamg.KeePass.AutoType.DataTransferObfuscation.get -> int
+Pidamg.KeePass.AutoType.DataTransferObfuscation.set -> void
+Pidamg.KeePass.AutoType.DefaultSequence.get -> string!
+Pidamg.KeePass.AutoType.DefaultSequence.set -> void
+Pidamg.KeePass.AutoType.Enabled.get -> bool
+Pidamg.KeePass.AutoType.Enabled.set -> void
+Pidamg.KeePass.AutoTypeAssociation
+Pidamg.KeePass.AutoTypeAssociation.AutoTypeAssociation() -> void
+Pidamg.KeePass.AutoTypeAssociation.Sequence.get -> string!
+Pidamg.KeePass.AutoTypeAssociation.Sequence.set -> void
+Pidamg.KeePass.AutoTypeAssociation.Window.get -> string!
+Pidamg.KeePass.AutoTypeAssociation.Window.set -> void
+Pidamg.KeePass.CipherAlgorithm
+Pidamg.KeePass.CipherAlgorithm.Aes128Cbc = 0 -> Pidamg.KeePass.CipherAlgorithm
+Pidamg.KeePass.CipherAlgorithm.Aes256Cbc = 1 -> Pidamg.KeePass.CipherAlgorithm
+Pidamg.KeePass.CipherAlgorithm.ChaCha20 = 2 -> Pidamg.KeePass.CipherAlgorithm
+Pidamg.KeePass.CipherAlgorithm.Twofish256Cbc = 3 -> Pidamg.KeePass.CipherAlgorithm
+Pidamg.KeePass.CompositeKey
+Pidamg.KeePass.CompositeKey.AddKeyFile(string! path) -> Pidamg.KeePass.CompositeKey!
+Pidamg.KeePass.CompositeKey.AddPassword(string! password) -> Pidamg.KeePass.CompositeKey!
+Pidamg.KeePass.CompositeKey.CompositeKey() -> void
+Pidamg.KeePass.CompositeKey.CompositeKey(string! password) -> void
+Pidamg.KeePass.CompositeKey.CompositeKey(string! password, string! keyFile) -> void
+Pidamg.KeePass.CustomIcon
+Pidamg.KeePass.CustomIcon.CustomIcon() -> void
+Pidamg.KeePass.CustomIcon.Data.get -> byte[]!
+Pidamg.KeePass.CustomIcon.Data.set -> void
+Pidamg.KeePass.CustomIcon.LastModificationTime.get -> System.DateTime?
+Pidamg.KeePass.CustomIcon.LastModificationTime.set -> void
+Pidamg.KeePass.CustomIcon.Name.get -> string!
+Pidamg.KeePass.CustomIcon.Name.set -> void
+Pidamg.KeePass.CustomIcon.Uuid.get -> System.Guid
+Pidamg.KeePass.CustomIcon.Uuid.set -> void
+Pidamg.KeePass.Entry
+Pidamg.KeePass.Entry.AutoType.get -> Pidamg.KeePass.AutoType!
+Pidamg.KeePass.Entry.AutoType.set -> void
+Pidamg.KeePass.Entry.BackgroundColor.get -> string!
+Pidamg.KeePass.Entry.BackgroundColor.set -> void
+Pidamg.KeePass.Entry.Binaries.get -> System.Collections.Generic.List<Pidamg.KeePass.EntryBinary!>!
+Pidamg.KeePass.Entry.Binaries.set -> void
+Pidamg.KeePass.Entry.Clone() -> Pidamg.KeePass.Entry!
+Pidamg.KeePass.Entry.CustomIconUuid.get -> System.Guid
+Pidamg.KeePass.Entry.CustomIconUuid.set -> void
+Pidamg.KeePass.Entry.Database.get -> Pidamg.KeePass.KdbxDatabase?
+Pidamg.KeePass.Entry.Delete() -> void
+Pidamg.KeePass.Entry.Entry() -> void
+Pidamg.KeePass.Entry.ForegroundColor.get -> string!
+Pidamg.KeePass.Entry.ForegroundColor.set -> void
+Pidamg.KeePass.Entry.History.get -> System.Collections.Generic.List<Pidamg.KeePass.Entry!>!
+Pidamg.KeePass.Entry.History.set -> void
+Pidamg.KeePass.Entry.IconId.get -> int
+Pidamg.KeePass.Entry.IconId.set -> void
+Pidamg.KeePass.Entry.MoveTo(Pidamg.KeePass.Group! group) -> void
+Pidamg.KeePass.Entry.Notes.get -> string!
+Pidamg.KeePass.Entry.Notes.set -> void
+Pidamg.KeePass.Entry.OverrideUrl.get -> string!
+Pidamg.KeePass.Entry.OverrideUrl.set -> void
+Pidamg.KeePass.Entry.ParentGroup.get -> Pidamg.KeePass.Group?
+Pidamg.KeePass.Entry.Password.get -> string!
+Pidamg.KeePass.Entry.Password.set -> void
+Pidamg.KeePass.Entry.Strings.get -> System.Collections.Generic.Dictionary<string!, Pidamg.KeePass.EntryString!>!
+Pidamg.KeePass.Entry.Strings.set -> void
+Pidamg.KeePass.Entry.Tags.get -> string!
+Pidamg.KeePass.Entry.Tags.set -> void
+Pidamg.KeePass.Entry.Times.get -> Pidamg.KeePass.Times!
+Pidamg.KeePass.Entry.Times.set -> void
+Pidamg.KeePass.Entry.Title.get -> string!
+Pidamg.KeePass.Entry.Title.set -> void
+Pidamg.KeePass.Entry.Update(System.Action<Pidamg.KeePass.Entry!>! update) -> void
+Pidamg.KeePass.Entry.Url.get -> string!
+Pidamg.KeePass.Entry.Url.set -> void
+Pidamg.KeePass.Entry.UserName.get -> string!
+Pidamg.KeePass.Entry.UserName.set -> void
+Pidamg.KeePass.Entry.Uuid.get -> System.Guid
+Pidamg.KeePass.Entry.Uuid.set -> void
+Pidamg.KeePass.EntryBinary
+Pidamg.KeePass.EntryBinary.Data.get -> byte[]!
+Pidamg.KeePass.EntryBinary.Data.set -> void
+Pidamg.KeePass.EntryBinary.EntryBinary() -> void
+Pidamg.KeePass.EntryBinary.IsProtected.get -> bool
+Pidamg.KeePass.EntryBinary.IsProtected.set -> void
+Pidamg.KeePass.EntryBinary.Name.get -> string!
+Pidamg.KeePass.EntryBinary.Name.set -> void
+Pidamg.KeePass.EntryString
+Pidamg.KeePass.EntryString.EntryString() -> void
+Pidamg.KeePass.EntryString.Protected.get -> bool
+Pidamg.KeePass.EntryString.Protected.set -> void
+Pidamg.KeePass.EntryString.Value.get -> string!
+Pidamg.KeePass.EntryString.Value.set -> void
+Pidamg.KeePass.Group
+Pidamg.KeePass.Group.AddEntry(Pidamg.KeePass.Entry! entry) -> void
+Pidamg.KeePass.Group.AddGroup(Pidamg.KeePass.Group! group) -> void
+Pidamg.KeePass.Group.Clone() -> Pidamg.KeePass.Group!
+Pidamg.KeePass.Group.CustomIconUuid.get -> System.Guid
+Pidamg.KeePass.Group.CustomIconUuid.set -> void
+Pidamg.KeePass.Group.Database.get -> Pidamg.KeePass.KdbxDatabase?
+Pidamg.KeePass.Group.Delete() -> void
+Pidamg.KeePass.Group.EnableAutoType.get -> bool?
+Pidamg.KeePass.Group.EnableAutoType.set -> void
+Pidamg.KeePass.Group.EnableSearching.get -> bool?
+Pidamg.KeePass.Group.EnableSearching.set -> void
+Pidamg.KeePass.Group.Entries.get -> System.Collections.ObjectModel.ReadOnlyCollection<Pidamg.KeePass.Entry!>!
+Pidamg.KeePass.Group.FindAllEntries(System.Func<Pidamg.KeePass.Entry!, bool>! predicate) -> System.Collections.Generic.IEnumerable<Pidamg.KeePass.Entry!>!
+Pidamg.KeePass.Group.FindAllGroups(System.Func<Pidamg.KeePass.Group!, bool>! predicate) -> System.Collections.Generic.IEnumerable<Pidamg.KeePass.Group!>!
+Pidamg.KeePass.Group.FindEntry(string! title) -> Pidamg.KeePass.Entry?
+Pidamg.KeePass.Group.FindEntry(System.Func<Pidamg.KeePass.Entry!, bool>! predicate) -> Pidamg.KeePass.Entry?
+Pidamg.KeePass.Group.FindGroup(string! name) -> Pidamg.KeePass.Group?
+Pidamg.KeePass.Group.FindGroup(System.Func<Pidamg.KeePass.Group!, bool>! predicate) -> Pidamg.KeePass.Group?
+Pidamg.KeePass.Group.Group() -> void
+Pidamg.KeePass.Group.Groups.get -> System.Collections.ObjectModel.ReadOnlyCollection<Pidamg.KeePass.Group!>!
+Pidamg.KeePass.Group.IconId.get -> int
+Pidamg.KeePass.Group.IconId.set -> void
+Pidamg.KeePass.Group.IsAncestorOf(Pidamg.KeePass.Group! group) -> bool
+Pidamg.KeePass.Group.IsExpanded.get -> bool
+Pidamg.KeePass.Group.IsExpanded.set -> void
+Pidamg.KeePass.Group.MoveTo(Pidamg.KeePass.Group! parent) -> void
+Pidamg.KeePass.Group.Name.get -> string!
+Pidamg.KeePass.Group.Name.set -> void
+Pidamg.KeePass.Group.Notes.get -> string!
+Pidamg.KeePass.Group.Notes.set -> void
+Pidamg.KeePass.Group.ParentGroup.get -> Pidamg.KeePass.Group?
+Pidamg.KeePass.Group.RemoveEntry(Pidamg.KeePass.Entry! entry) -> void
+Pidamg.KeePass.Group.RemoveGroup(Pidamg.KeePass.Group! group) -> void
+Pidamg.KeePass.Group.Times.get -> Pidamg.KeePass.Times!
+Pidamg.KeePass.Group.Times.set -> void
+Pidamg.KeePass.Group.Uuid.get -> System.Guid
+Pidamg.KeePass.Group.Uuid.set -> void
+Pidamg.KeePass.IKdf
+Pidamg.KeePass.IKdf.Transform(byte[]! rawKey) -> byte[]!
+Pidamg.KeePass.KdbxDatabase
+Pidamg.KeePass.KdbxDatabase.Dispose() -> void
+Pidamg.KeePass.KdbxDatabase.FileInfo.get -> System.IO.FileInfo?
+Pidamg.KeePass.KdbxDatabase.FindAllEntries(System.Func<Pidamg.KeePass.Entry!, bool>! predicate) -> System.Collections.Generic.IEnumerable<Pidamg.KeePass.Entry!>!
+Pidamg.KeePass.KdbxDatabase.FindAllGroups(System.Func<Pidamg.KeePass.Group!, bool>! predicate) -> System.Collections.Generic.IEnumerable<Pidamg.KeePass.Group!>!
+Pidamg.KeePass.KdbxDatabase.FindEntry(string! title) -> Pidamg.KeePass.Entry?
+Pidamg.KeePass.KdbxDatabase.FindEntry(System.Func<Pidamg.KeePass.Entry!, bool>! predicate) -> Pidamg.KeePass.Entry?
+Pidamg.KeePass.KdbxDatabase.FindGroup(string! name) -> Pidamg.KeePass.Group?
+Pidamg.KeePass.KdbxDatabase.FindGroup(System.Func<Pidamg.KeePass.Group!, bool>! predicate) -> Pidamg.KeePass.Group?
+Pidamg.KeePass.KdbxDatabase.GetRecycleBin() -> Pidamg.KeePass.Group?
+Pidamg.KeePass.KdbxDatabase.HasChanges.get -> bool
+Pidamg.KeePass.KdbxDatabase.IsRecycleBinEnabled() -> bool
+Pidamg.KeePass.KdbxDatabase.KdbxDatabase() -> void
+Pidamg.KeePass.KdbxDatabase.KdbxDatabase(Pidamg.KeePass.CompositeKey! key) -> void
+Pidamg.KeePass.KdbxDatabase.KdbxDatabase(string! path) -> void
+Pidamg.KeePass.KdbxDatabase.KdbxDatabase(string! path, Pidamg.KeePass.CompositeKey! key) -> void
+Pidamg.KeePass.KdbxDatabase.KdbxDatabase(string! path, string! password) -> void
+Pidamg.KeePass.KdbxDatabase.KdbxDatabase(string! path, string! password, string! keyFile) -> void
+Pidamg.KeePass.KdbxDatabase.Metadata.get -> Pidamg.KeePass.Metadata!
+Pidamg.KeePass.KdbxDatabase.Open() -> void
+Pidamg.KeePass.KdbxDatabase.OpenAsync(System.Threading.CancellationToken ct = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Pidamg.KeePass.KdbxDatabase.RootGroup.get -> Pidamg.KeePass.Group!
+Pidamg.KeePass.KdbxDatabase.Save() -> void
+Pidamg.KeePass.KdbxDatabase.SaveAs(string! path) -> void
+Pidamg.KeePass.KdbxDatabase.SaveAsAsync(string! path, System.Threading.CancellationToken ct = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Pidamg.KeePass.KdbxDatabase.SaveAsync(System.Threading.CancellationToken ct = default(System.Threading.CancellationToken)) -> System.Threading.Tasks.Task!
+Pidamg.KeePass.KdbxDatabase.Settings.get -> Pidamg.KeePass.KdbxSettings!
+Pidamg.KeePass.KdbxDatabase.Settings.set -> void
+Pidamg.KeePass.KdbxDatabase.Version.get -> Pidamg.KeePass.KdbxVersion!
+Pidamg.KeePass.KdbxFormat
+Pidamg.KeePass.KdbxFormat.Kdbx3 = 1 -> Pidamg.KeePass.KdbxFormat
+Pidamg.KeePass.KdbxFormat.Kdbx4 = 0 -> Pidamg.KeePass.KdbxFormat
+Pidamg.KeePass.KdbxSettings
+Pidamg.KeePass.KdbxSettings.Cipher.get -> Pidamg.KeePass.CipherAlgorithm
+Pidamg.KeePass.KdbxSettings.Cipher.set -> void
+Pidamg.KeePass.KdbxSettings.Format.get -> Pidamg.KeePass.KdbxFormat
+Pidamg.KeePass.KdbxSettings.Format.set -> void
+Pidamg.KeePass.KdbxSettings.InnerStreamAlgorithm.get -> Pidamg.KeePass.ProtectedStreamAlgorithm
+Pidamg.KeePass.KdbxSettings.InnerStreamAlgorithm.set -> void
+Pidamg.KeePass.KdbxSettings.IsCompressed.get -> bool
+Pidamg.KeePass.KdbxSettings.IsCompressed.set -> void
+Pidamg.KeePass.KdbxSettings.KdbxSettings() -> void
+Pidamg.KeePass.KdbxSettings.Kdf.get -> Pidamg.KeePass.IKdf!
+Pidamg.KeePass.KdbxSettings.Kdf.set -> void
+Pidamg.KeePass.KdbxVersion
+Pidamg.KeePass.KdbxVersion.CompareTo(Pidamg.KeePass.KdbxVersion? other) -> int
+Pidamg.KeePass.KdbxVersion.Equals(Pidamg.KeePass.KdbxVersion? other) -> bool
+Pidamg.KeePass.KdbxVersion.IsZero.get -> bool
+Pidamg.KeePass.KdbxVersion.KdbxVersion() -> void
+Pidamg.KeePass.KdbxVersion.KdbxVersion(ushort major, ushort minor) -> void
+Pidamg.KeePass.KdbxVersion.Major.get -> ushort
+Pidamg.KeePass.KdbxVersion.Minor.get -> ushort
+Pidamg.KeePass.KeyFile
+Pidamg.KeePass.KeyFileFormat
+Pidamg.KeePass.KeyFileFormat.Raw = 1 -> Pidamg.KeePass.KeyFileFormat
+Pidamg.KeePass.KeyFileFormat.Xml = 0 -> Pidamg.KeePass.KeyFileFormat
+Pidamg.KeePass.Metadata
+Pidamg.KeePass.Metadata.CustomIcons.get -> System.Collections.Generic.List<Pidamg.KeePass.CustomIcon!>!
+Pidamg.KeePass.Metadata.CustomIcons.set -> void
+Pidamg.KeePass.Metadata.DefaultUserName.get -> string!
+Pidamg.KeePass.Metadata.DefaultUserName.set -> void
+Pidamg.KeePass.Metadata.Description.get -> string!
+Pidamg.KeePass.Metadata.Description.set -> void
+Pidamg.KeePass.Metadata.HistoryMaxItems.get -> int
+Pidamg.KeePass.Metadata.HistoryMaxItems.set -> void
+Pidamg.KeePass.Metadata.HistoryMaxSize.get -> long
+Pidamg.KeePass.Metadata.HistoryMaxSize.set -> void
+Pidamg.KeePass.Metadata.Metadata() -> void
+Pidamg.KeePass.Metadata.Name.get -> string!
+Pidamg.KeePass.Metadata.Name.set -> void
+Pidamg.KeePass.Metadata.ProtectPassword.get -> bool
+Pidamg.KeePass.Metadata.ProtectPassword.set -> void
+Pidamg.KeePass.Metadata.RecycleBinEnabled.get -> bool
+Pidamg.KeePass.Metadata.RecycleBinEnabled.set -> void
+Pidamg.KeePass.Metadata.RecycleBinUuid.get -> System.Guid
+Pidamg.KeePass.Metadata.RecycleBinUuid.set -> void
+Pidamg.KeePass.ProtectedStreamAlgorithm
+Pidamg.KeePass.ProtectedStreamAlgorithm.ChaCha20 = 3 -> Pidamg.KeePass.ProtectedStreamAlgorithm
+Pidamg.KeePass.ProtectedStreamAlgorithm.Salsa20 = 2 -> Pidamg.KeePass.ProtectedStreamAlgorithm
+Pidamg.KeePass.Times
+Pidamg.KeePass.Times.Clone() -> Pidamg.KeePass.Times!
+Pidamg.KeePass.Times.CreationTime.get -> System.DateTime
+Pidamg.KeePass.Times.CreationTime.set -> void
+Pidamg.KeePass.Times.Expires.get -> bool
+Pidamg.KeePass.Times.Expires.set -> void
+Pidamg.KeePass.Times.ExpiryTime.get -> System.DateTime
+Pidamg.KeePass.Times.ExpiryTime.set -> void
+Pidamg.KeePass.Times.LastAccessTime.get -> System.DateTime
+Pidamg.KeePass.Times.LastAccessTime.set -> void
+Pidamg.KeePass.Times.LastModificationTime.get -> System.DateTime
+Pidamg.KeePass.Times.LastModificationTime.set -> void
+Pidamg.KeePass.Times.LocationChanged.get -> System.DateTime
+Pidamg.KeePass.Times.LocationChanged.set -> void
+Pidamg.KeePass.Times.Times() -> void
+Pidamg.KeePass.Times.UsageCount.get -> int
+Pidamg.KeePass.Times.UsageCount.set -> void
+static Pidamg.KeePass.KdbxDatabase.Create(string! password) -> Pidamg.KeePass.KdbxDatabase!
+static Pidamg.KeePass.KdbxDatabase.Create(string! password, Pidamg.KeePass.KdbxSettings? settings) -> Pidamg.KeePass.KdbxDatabase!
+static Pidamg.KeePass.KdbxDatabase.Create(string! password, string! keyFile) -> Pidamg.KeePass.KdbxDatabase!
+static Pidamg.KeePass.KdbxDatabase.Create(string! password, string! keyFile, Pidamg.KeePass.KdbxSettings? settings) -> Pidamg.KeePass.KdbxDatabase!
+static Pidamg.KeePass.KdbxDatabase.Open(string! path, string! password, string? keyFile = null) -> Pidamg.KeePass.KdbxDatabase!
+static Pidamg.KeePass.KdbxVersion.operator !=(Pidamg.KeePass.KdbxVersion? v1, Pidamg.KeePass.KdbxVersion? v2) -> bool
+static Pidamg.KeePass.KdbxVersion.operator <(Pidamg.KeePass.KdbxVersion? v1, Pidamg.KeePass.KdbxVersion? v2) -> bool
+static Pidamg.KeePass.KdbxVersion.operator <=(Pidamg.KeePass.KdbxVersion? v1, Pidamg.KeePass.KdbxVersion? v2) -> bool
+static Pidamg.KeePass.KdbxVersion.operator ==(Pidamg.KeePass.KdbxVersion? v1, Pidamg.KeePass.KdbxVersion? v2) -> bool
+static Pidamg.KeePass.KdbxVersion.operator >(Pidamg.KeePass.KdbxVersion? v1, Pidamg.KeePass.KdbxVersion? v2) -> bool
+static Pidamg.KeePass.KdbxVersion.operator >=(Pidamg.KeePass.KdbxVersion? v1, Pidamg.KeePass.KdbxVersion? v2) -> bool
+static Pidamg.KeePass.KeyFile.Generate(string! path, Pidamg.KeePass.KeyFileFormat format = Pidamg.KeePass.KeyFileFormat.Xml) -> void
+static Pidamg.KeePass.Times.Create() -> Pidamg.KeePass.Times!

@@ -7,6 +7,10 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- Established the current public API as the compatibility baseline for the stable release.
+
 ## [0.1.0-beta.1] - 2026-07-28
 
 ### Added
