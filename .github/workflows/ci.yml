@@ -22,10 +22,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: "10.0.x"
+          dotnet-version: |
+            8.0.x
+            10.0.x
           cache: true
           cache-dependency-path: Directory.Packages.props
       - name: Restore
@@ -47,10 +49,12 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: "10.0.x"
+          dotnet-version: |
+            8.0.x
+            10.0.x
           cache: true
           cache-dependency-path: Directory.Packages.props
       - name: Resolve version
@@ -69,7 +73,7 @@ jobs:
           -p:AssemblyVersion="$ASSEMBLY_VERSION"
           -p:FileVersion="$FILE_VERSION"
           --output nupkgs/
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: nuget-package
           path: nupkgs/
@@ -79,11 +83,13 @@ jobs:
     needs: pack
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: "10.0.x"
-      - uses: actions/download-artifact@v4
+          dotnet-version: |
+            8.0.x
+            10.0.x
+      - uses: actions/download-artifact@v8
         with:
           name: nuget-package
           path: nupkgs/
@@ -98,16 +104,34 @@ jobs:
             --configuration Release \
             --no-restore \
             -p:TestPackageVersion="$PACKAGE_VERSION"
+      - name: Test package with PowerShell 7.4
+        run: |
+          PACKAGE_VERSION="${GITHUB_REF_NAME#v}"
+          mkdir powershell-package
+          unzip -q "nupkgs/Pidamg.KeePass.Kdbx.$PACKAGE_VERSION.nupkg" -d powershell-package
+          BOUNCYCASTLE_DLL="$(find "$HOME/.nuget/packages/bouncycastle.cryptography" \
+            -path '*/lib/net6.0/BouncyCastle.Cryptography.dll' -print -quit)"
+          test -n "$BOUNCYCASTLE_DLL"
+          cp "$BOUNCYCASTLE_DLL" powershell-package/
+          docker run --rm \
+            --volume "$PWD:/workspace" \
+            --workdir /workspace \
+            mcr.microsoft.com/powershell:7.4-ubuntu-22.04 \
+            pwsh \
+            -NoProfile \
+            -File tests/PowerShell/PackageSmokeTest.ps1 \
+            -AssemblyPath powershell-package/lib/net8.0/Pidamg.KeePass.Kdbx.dll \
+            -DependencyPath powershell-package/BouncyCastle.Cryptography.dll
 
   publish-github-packages:
     if: startsWith(github.ref, 'refs/tags/v')
     needs: [pack, test-package]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: "10.0.x"
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: nuget-package
           path: nupkgs/
@@ -129,10 +153,10 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: "10.0.x"
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: nuget-package
           path: nupkgs/
@@ -161,8 +185,8 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
         with:
           name: nuget-package
           path: nupkgs/

@@ -6,8 +6,8 @@ A .NET library for reading, creating, modifying, and saving
 [KeePass](https://keepass.info/) password databases in the KDBX format.
 
 > [!IMPORTANT]
-> This project is currently a preview and targets .NET 10. The public API may still change before
-> the stable `1.0.0` release.
+> This project is currently a preview, targets .NET 8, and supports PowerShell 7.4 or later. The
+> public API may still change before the stable `1.0.0` release.
 
 ## Features
 

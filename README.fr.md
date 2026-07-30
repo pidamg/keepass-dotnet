@@ -6,8 +6,8 @@ Bibliothèque .NET pour lire, créer, modifier et enregistrer des bases de mots 
 [KeePass](https://keepass.info/) au format KDBX.
 
 > [!IMPORTANT]
-> Le projet est actuellement en préversion et cible .NET 10. L'API publique peut encore évoluer
-> avant la version stable `1.0.0`.
+> Le projet est actuellement en préversion, cible .NET 8 et prend en charge PowerShell 7.4 ou
+> version ultérieure. L'API publique peut encore évoluer avant la version stable `1.0.0`.
 
 ## Fonctionnalités
 

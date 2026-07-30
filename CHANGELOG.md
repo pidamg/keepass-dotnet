@@ -7,6 +7,17 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.1-beta.1] - 2026-07-30
+
+### Added
+
+- Added a PowerShell 7.4 smoke test for the packaged .NET 8 assembly to the release pipeline.
+
+### Changed
+
+- Changed the target framework from .NET 10 to .NET 8 and added support for PowerShell 7.4 or
+  later.
+
 ## [0.1.0] - 2026-07-29
 
 ### Changed
@@ -57,7 +68,8 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - Added XML IntelliSense documentation and public API compatibility validation.
 - Added unit and public integration test suites.
 
-[Unreleased]: https://github.com/pidamg/keepass-dotnet/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/pidamg/keepass-dotnet/compare/v0.1.1-beta.1...HEAD
+[0.1.1-beta.1]: https://github.com/pidamg/keepass-dotnet/compare/v0.1.0...v0.1.1-beta.1
 [0.1.0]: https://github.com/pidamg/keepass-dotnet/compare/v0.1.0-beta.1...v0.1.0
 [0.1.0-beta.1]: https://github.com/pidamg/keepass-dotnet/compare/v0.1.0-alpha.3...v0.1.0-beta.1
 [0.1.0-alpha.3]: https://github.com/pidamg/keepass-dotnet/compare/v0.1.0-alpha.2...v0.1.0-alpha.3
